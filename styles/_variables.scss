@@ -4,9 +4,7 @@ $ipad-mobile: 51.25rem; // Ipad pro max
 $desktop-mobile: 120rem; // 1920px * 1080px
 
 /* Colors */
-
 $primary: #0c60c2;
-
 $primary-variant: #0c60c2;
 $secondary: #0c60c2;
 $secondary-variant: #0c60c2;
@@ -14,8 +12,8 @@ $background: #0c60c2;
 $surface: #0c60c2;
 $error: #0c60c2;
 
-$on-primary: #0c60c2;
-$on-secondary: #0c60c2;
-$on-background: #0c60c2;
-$on-surface: #0c60c2;
+$on-primary: white;
+$on-secondary: black;
+$on-background: #808080;
+$on-surface: #c0c0c0;
 $on-error: #0c60c2;

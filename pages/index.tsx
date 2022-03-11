@@ -1,7 +1,11 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import Image from "next/image";
+import Logo from "../components/elements/logo";
+import Nav from "../components/nav";
 import styles from "./Index.module.scss";
+import Updates from "../components/updates";
+import Link from "next/link";
+import Banner from "../components/elements/banner";
 
 const Home: NextPage = () => {
 	return (
@@ -13,38 +17,18 @@ const Home: NextPage = () => {
 			</Head>
 
 			<header className={styles.header}>
-				{/* Logo */}
-				<div className={styles["wrapper-logo"]}>
-					<Image alt="Logo" src="/logo.svg" layout="fill" objectFit="contain" />
-				</div>
-				{/* Content */}
-				<div className={styles["content"]}>
-					<div className={styles["wrapper-panorama"]}>
-						<Image
-							className={styles["panorama"]}
-							src="/img/sweden-panorama.jpeg"
-							alt="Sweden Panorama"
-							layout="fill"
-							objectFit="cover"
-						/>
-					</div>
-					<div className={styles["text"]}>
-						<p className={styles["sub-title"]}>Piemol</p>
-						<h1 className={styles["title"]}>Sweden</h1>
-					</div>
-				</div>
-				{/* Navigation */}
-				{/* <nav>
-					<ul>
-						<li></li>
-						<li></li>
-						<li></li>
-						<li></li>
-					</ul>
-				</nav> */}
+				<Link href="" passHref>
+					<a>
+						<Logo />
+					</a>
+				</Link>
+				<Banner imgSrc="/img/sweden-panorama.jpeg" imgAlt="Sweden Panorama" />
+				<Nav />
 			</header>
 
-			<main className={styles.main}></main>
+			<main className={styles["main"]}>
+				<Updates />
+			</main>
 
 			<footer className={styles.footer}></footer>
 		</div>

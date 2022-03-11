@@ -1,0 +1,29 @@
+.banner {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 14rem;
+}
+
+.wrapper-panorama {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
+
+.banner-overlay::after {
+	content: "";
+	position: absolute;
+
+	height: 100%;
+	width: 100%;
+	background-color: rgba($color: #000000, $alpha: 0.2);
+}
+
+.banner-content {
+	position: absolute;
+	display: grid;
+	align-self: center;
+	grid-template-rows: repeat(3, 1fr);
+}

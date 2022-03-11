@@ -1,0 +1,18 @@
+@use "/styles/variables.scss" as var;
+
+.nav {
+	display: flex;
+	list-style: none;
+	gap: 1rem;
+	border-bottom: 1px solid var.$on-surface;
+}
+
+.nav-el {
+	padding: 0.6em;
+	color: var.$on-background;
+}
+
+.nav-el-active {
+	text-decoration: underline;
+	text-decoration-color: var.$on-surface;
+}
