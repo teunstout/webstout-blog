@@ -12,11 +12,7 @@ export interface BannerInterface {
 const Banner: NextPage<BannerInterface> = ({ imgSrc, imgAlt, children }) => {
 	return (
 		<div className={styles["banner"]}>
-			<div
-				className={`${styles["wrapper-panorama"]}${
-					children ? styles["banner-overlay"] : ""
-				}`}
-			>
+			<div className={styles["wrapper-panorama"]}>
 				<Image
 					className={styles["panorama"]}
 					src={imgSrc}

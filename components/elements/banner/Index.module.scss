@@ -10,18 +10,19 @@
 	position: absolute;
 	width: 100%;
 	height: 100%;
-}
 
-.banner-overlay::after {
-	content: "";
-	position: absolute;
+	&::after {
+		content: "";
+		position: absolute;
 
-	height: 100%;
-	width: 100%;
-	background-color: rgba($color: #000000, $alpha: 0.2);
+		height: 100%;
+		width: 100%;
+		background-color: rgba($color: #000000, $alpha: 0.2);
+	}
 }
 
 .banner-content {
+	z-index: 9999;
 	position: absolute;
 	display: grid;
 	align-self: center;
