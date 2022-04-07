@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
+import Navigation from "../components/navigation";
 import styles from "./Index.module.scss";
 
 const Home: NextPage = () => {
@@ -12,13 +13,10 @@ const Home: NextPage = () => {
 				<link rel="icon" href="/logo.svg" />
 			</Head>
 
-			<header className={styles.header}>
-				{/* Logo */}
-				<div className={styles["wrapper-logo"]}>
-					<Image alt="Logo" src="/logo.svg" layout="fill" objectFit="contain" />
-				</div>
-				{/* Content */}
-				<div className={styles["content"]}>
+			<header className={styles["header"]}>
+				<Navigation />
+
+				{/* <div className={styles["header-content"]}>
 					<div className={styles["wrapper-panorama"]}>
 						<Image
 							className={styles["panorama"]}
@@ -32,21 +30,15 @@ const Home: NextPage = () => {
 						<p className={styles["sub-title"]}>Piemol</p>
 						<h1 className={styles["title"]}>Sweden</h1>
 					</div>
-				</div>
-				{/* Navigation */}
-				{/* <nav>
-					<ul>
-						<li></li>
-						<li></li>
-						<li></li>
-						<li></li>
-					</ul>
-				</nav> */}
+				</div> */}
 			</header>
 
-			<main className={styles.main}></main>
+			<main className={styles["main"]}>
+				<h1>PHOTO</h1>
+				<p className={styles["main-subtitle"]}>Photos shot by me at interesting places</p>
+			</main>
 
-			<footer className={styles.footer}></footer>
+			<footer className={styles["footer"]}></footer>
 		</div>
 	);
 };

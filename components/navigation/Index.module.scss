@@ -1,0 +1,41 @@
+@use "styles/variables" as var;
+
+.navigation-main {
+	display: flex;
+	width: 100%;
+	justify-content: space-between;
+	height: 3rem;
+	padding: 0 1rem;
+	cursor: pointer;
+}
+
+.image {
+	height: 100%;
+}
+
+.lists {
+	display: grid;
+	grid-template-columns: repeat(2, max-content);
+	height: 100%;
+	width: fit-content;
+	gap: 1rem;
+	list-style: none;
+}
+
+.list > li {
+	display: inline-flex;
+	align-items: center;
+	height: 100%;
+	cursor: pointer;
+	padding: 0 1rem;
+}
+
+.list > li > a {
+	font-weight: 700;
+	color: var.$on-primary;
+	transition: transform 200ms;
+
+	&:hover {
+		transform: scale(1.05);
+	}
+}
