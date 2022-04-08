@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import Button from "../../components/button";
-import Navigation from "../../components/navigation";
+import Header from "../../components/header";
 import PhotoCard from "../../components/photo-card";
 import styles from "./Index.module.scss";
 
@@ -15,8 +15,7 @@ const Home: NextPage = () => {
 				<link rel="icon" href="/logo.svg" />
 			</Head>
 
-			<header className={styles["header"]}>
-				<Navigation />
+			<Header>
 				<div className={styles["header-photo-wrapper"]}>
 					<Image
 						alt={"heading"}
@@ -25,7 +24,7 @@ const Home: NextPage = () => {
 						objectFit="cover"
 					/>
 				</div>
-			</header>
+			</Header>
 
 			<main className={styles["main"]}>
 				<section>
