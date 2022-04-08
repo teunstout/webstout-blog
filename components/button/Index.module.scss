@@ -1,0 +1,12 @@
+@use "styles/variables" as var;
+
+.button {
+	font-size: 1rem;
+	padding: 0.5em 2em;
+	font-weight: 600;
+	background-color: transparent;
+	color: var.$on-primary;
+	border-color: var.$on-primary;
+	border-radius: var.$border-radius;
+	cursor: pointer;
+}

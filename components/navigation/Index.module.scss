@@ -7,6 +7,10 @@
 	height: 3rem;
 	padding: 0 1rem;
 	cursor: pointer;
+
+	a {
+		display: inherit;
+	}
 }
 
 .image {

@@ -1,4 +1,3 @@
-import type { NextPage } from "next";
 import Image from "next/image";
 import styles from "./Index.module.scss";
 
@@ -15,13 +14,7 @@ interface IconInterface {
 	hover?: boolean;
 }
 
-const Icon: NextPage<IconInterface> = ({
-	icon,
-	height,
-	width,
-	className,
-	hover,
-}) => {
+const Icon = ({ icon, height, width, className, hover }: IconInterface) => {
 	return (
 		<Image
 			className={`${styles["icon"]} ${
