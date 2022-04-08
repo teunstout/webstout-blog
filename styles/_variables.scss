@@ -17,9 +17,13 @@ $surface: #0c60c2;
 $error: #0c60c2;
 
 $on-primary: black;
-$on-secondary: #0c60c2;
+$on-secondary: gray;
 $on-background: #0c60c2;
 $on-surface: #0c60c2;
 $on-error: #0c60c2;
 
-/* Sizes text */
+/* Button */
+$primary-button: #ffa260;
+
+/* Border Radius */
+$border-radius: 4px;

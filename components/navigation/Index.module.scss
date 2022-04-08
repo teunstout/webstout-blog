@@ -4,9 +4,13 @@
 	display: flex;
 	width: 100%;
 	justify-content: space-between;
-	height: 3rem;
+	height: 3.5rem;
 	padding: 0 1rem;
 	cursor: pointer;
+
+	a {
+		display: inherit;
+	}
 }
 
 .image {

@@ -1,4 +1,3 @@
-import type { NextPage } from "next";
 import Image from "next/image";
 import { IconEnum } from "..";
 import styles from "../Index.module.scss";
@@ -8,7 +7,7 @@ interface IconInterface {
 	className?: string;
 }
 
-const IconDynamic: NextPage<IconInterface> = ({ icon, className }) => {
+const IconDynamic = ({ icon, className }: IconInterface) => {
 	return (
 		<Image
 			className={`${styles["icon"]} ${className}`}

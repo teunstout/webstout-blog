@@ -1,14 +1,15 @@
-import type { NextPage } from "next";
 import Link from "next/link";
 import Icon, { IconEnum } from "../icon";
 import IconDynamic from "../icon/dynamic";
 import styles from "./Index.module.scss";
 
-const Navigation: NextPage = () => {
+const Navigation = () => {
 	return (
 		<nav className={styles["navigation-main"]}>
 			<Link href="/" passHref>
-				<IconDynamic className={styles["image"]} icon={IconEnum.logo} />
+				<a>
+					<IconDynamic className={styles["image"]} icon={IconEnum.logo} />
+				</a>
 			</Link>
 
 			<div className={styles["lists"]}>
@@ -23,7 +24,11 @@ const Navigation: NextPage = () => {
 
 				<ul className={styles["list"]}>
 					<li>
-						<Icon icon={IconEnum.instagram} height={24} width={24} hover />
+						<Link href="https://www.instagram.com/teun_stout" passHref>
+							<a>
+								<Icon icon={IconEnum.instagram} height={24} width={24} hover />
+							</a>
+						</Link>
 					</li>
 				</ul>
 			</div>
