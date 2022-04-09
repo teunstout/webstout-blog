@@ -1,36 +1,24 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import Image from "next/image";
 import Button from "../../components/button";
-import Header from "../../components/header";
+import PageLayout from "../../components/page-layout";
 import PhotoCard from "../../components/photo-card";
 import styles from "./Index.module.scss";
 
 const Home: NextPage = () => {
 	return (
-		<div className={styles.container}>
-			<Head>
-				<title>Webstout Blog - Photo Albums</title>
-				<meta name="Home" content="Homescreen of blog" />
-				<link rel="icon" href="/logo.svg" />
-			</Head>
-
-			<Header>
-				<div className={styles["header-photo-wrapper"]}>
-					<Image
-						alt={"heading"}
-						src="/img/sweden-panorama.jpeg"
-						layout="fill"
-						objectFit="cover"
-					/>
-				</div>
-			</Header>
-
+		<PageLayout img="/img/sweden-panorama.jpeg">
 			<main className={styles["main"]}>
+				<Head>
+					<title>Webstout Blog - Photo Albums</title>
+					<meta name="Home" content="Homescreen of blog" />
+					<link rel="icon" href="/logo.svg" />
+				</Head>
+
 				<section>
 					<header className={styles["main-header"]}>
-						<h1>PHOTO</h1>
-						<p>Photos shot by me at interesting places</p>
+						<h1>Albums</h1>
+						<p>Photos & videos created and shot by me</p>
 					</header>
 
 					<div className={styles["main-photo-cards"]}>
@@ -54,7 +42,7 @@ const Home: NextPage = () => {
 					<Button className={styles["main-button"]}>Load More</Button>
 				</section>
 			</main>
-		</div>
+		</PageLayout>
 	);
 };
 

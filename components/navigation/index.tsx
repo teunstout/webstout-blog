@@ -18,7 +18,7 @@ const Navigation = () => {
 						<Link href="/">Home</Link>
 					</li>
 					<li>
-						<Link href="/photo">Photo</Link>
+						<Link href="/album">Albums</Link>
 					</li>
 				</ul>
 
