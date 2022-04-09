@@ -10,8 +10,7 @@
 	cursor: pointer;
 	transition: 0.25s;
 
-	&:hover,
-	&:focus {
+	&:hover {
 		box-shadow: 0 0.5em 0.5em -0.4em var.$primary-button;
 		transform: translateY(-0.25em);
 	}
