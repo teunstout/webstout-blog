@@ -20,6 +20,9 @@ const Navigation = () => {
 					<li>
 						<Link href="/album">Albums</Link>
 					</li>
+					<li>
+						<Link href="/blog">Blog</Link>
+					</li>
 				</ul>
 
 				<ul className={styles["list"]}>
