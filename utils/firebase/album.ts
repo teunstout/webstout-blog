@@ -1,5 +1,5 @@
-import { getDatabase, ref, set } from "firebase/database";
-import { app } from ".";
+import { ref, set } from "firebase/database";
+import { db } from ".";
 
 export interface UserDTO {
 	title: string;
@@ -16,8 +16,6 @@ export function writeUserData({
 	startDate,
 	endDate,
 }: UserDTO) {
-	const db = getDatabase(app);
-
 	set(ref(db, "albums/" + title), {
 		title: title,
 		subtitle: subtitle,
