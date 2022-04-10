@@ -12,7 +12,13 @@ const PageLayout = ({ children, img }: PageLayoutInterface) => {
 		<div className={styles["content"]}>
 			<Header>
 				<div className={styles["header-photo-wrapper"]}>
-					<Image alt={"heading"} src={img} layout="fill" objectFit="cover" />
+					<Image
+						alt={"heading"}
+						src={img}
+						layout="fill"
+						objectFit="cover"
+						priority
+					/>
 				</div>
 			</Header>
 			{children}

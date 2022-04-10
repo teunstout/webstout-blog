@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Button from "../button";
 import Icon, { IconEnum } from "../icon";
 import IconDynamic from "../icon/dynamic";
 import styles from "./Index.module.scss";
@@ -14,19 +15,27 @@ const Navigation = () => {
 
 			<div className={styles["lists"]}>
 				<ul className={styles["list"]}>
-					<li>
-						<Link href="/">Home</Link>
+					<li className={styles["list-item"]}>
+						<Link href="/" passHref>
+							<a>Home</a>
+						</Link>
 					</li>
-					<li>
-						<Link href="/album">Albums</Link>
+					<li className={styles["list-item"]}>
+						<Link href="/album" passHref>
+							<a>Albums</a>
+						</Link>
 					</li>
-					<li>
-						<Link href="/blog">Blog</Link>
+					<li className={styles["list-item"]}>
+						<Link href="/blog" passHref>
+							<a>Blog</a>
+						</Link>
 					</li>
+					{/* TODO: When admin show button */}
+					{false && <Button className={styles["upload-button"]}>Upload</Button>}
 				</ul>
 
 				<ul className={styles["list"]}>
-					<li>
+					<li className={styles["list-item"]}>
 						<Link href="https://www.instagram.com/teun_stout" passHref>
 							<a>
 								<Icon icon={IconEnum.instagram} height={24} width={24} hover />
