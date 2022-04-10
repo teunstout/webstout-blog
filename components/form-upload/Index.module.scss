@@ -1,0 +1,35 @@
+@use "styles/variables" as var;
+
+.form {
+	display: grid;
+	gap: 1rem;
+	padding: 1rem;
+	max-width: 30rem;
+	width: 100%;
+	margin: 0 auto;
+	height: fit-content;
+}
+
+.photos-h1 {
+	font-weight: 500;
+	font-size: 1.5rem;
+}
+
+.form-h2 {
+	font-weight: 500;
+	font-size: 1.1rem;
+}
+
+.form-dates {
+	display: flex;
+	gap: 1rem;
+
+	> div {
+		width: 100%;
+	}
+}
+
+.form-button {
+	margin: 0 auto;
+	border-width: 1px;
+}
