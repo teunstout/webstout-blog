@@ -65,10 +65,15 @@
 	height: 8rem;
 	cursor: pointer;
 	transition: 0.25s;
+	border: 2px solid transparent;
 
 	&:hover {
 		transform: translateY(-0.25em);
 	}
+}
+
+.photo-selected {
+	border: 2px solid var.$on-secondary;
 }
 
 .photos-text {

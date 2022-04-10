@@ -11,6 +11,7 @@ import styles from "./Index.module.scss";
 
 const Upload: NextPage = () => {
 	const [images, setImages] = useState<string[]>([]);
+	const [selected, setSelected] = useState<string>();
 
 	const showImages = (event: React.ChangeEvent<HTMLInputElement>) => {
 		if (!event.target.files) return;
@@ -76,14 +77,20 @@ const Upload: NextPage = () => {
 						)}
 
 						{images.map((path, index) => (
-							<div key={index} className={styles["photo-wrapper"]}>
+							<a
+								key={index}
+								className={`${styles["photo-wrapper"]} ${
+									path === selected ? styles["photo-selected"] : ""
+								}`}
+								onClick={() => setSelected(path)}
+							>
 								<Image
 									alt={"photo selected"}
 									src={path}
 									layout="fill"
 									objectFit="cover"
 								/>
-							</div>
+							</a>
 						))}
 					</div>
 				</article>
