@@ -1,0 +1,84 @@
+@use "styles/variables" as var;
+
+.layout {
+	display: flex;
+	flex-direction: column;
+}
+
+.main {
+	display: grid;
+	grid-template-columns: initial;
+	gap: 2rem;
+	padding: 2rem;
+	flex-grow: 1;
+	max-height: 100%;
+}
+
+.form {
+	display: grid;
+	gap: 1rem;
+	padding: 1rem;
+	max-width: 30rem;
+	width: 100%;
+	margin: 0 auto;
+	height: fit-content;
+}
+
+.form-h1,
+.photos-h1 {
+	font-weight: 500;
+	font-size: 1.5rem;
+}
+
+.form-h2 {
+	font-weight: 500;
+	font-size: 1.1rem;
+}
+
+.form-dates {
+	display: flex;
+	gap: 1rem;
+
+	> div {
+		width: 100%;
+	}
+}
+
+.form-button {
+	margin: 0 auto;
+	border-width: 1px;
+}
+
+.photos-container > p {
+	font-size: 0.8rem;
+}
+
+.photos {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 1rem;
+	padding: 1rem;
+}
+
+.photo-wrapper {
+	position: relative;
+	height: 8rem;
+	cursor: pointer;
+	transition: 0.25s;
+
+	&:hover {
+		transform: translateY(-0.25em);
+	}
+}
+
+.photos-text {
+	grid-column: 2 span;
+	text-align: center;
+	place-self: center;
+}
+
+@media only screen and (min-width: var.$medium-screen) {
+	.main {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}

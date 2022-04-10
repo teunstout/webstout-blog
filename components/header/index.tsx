@@ -1,9 +1,9 @@
-import React, { Children } from "react";
+import React from "react";
 import Navigation from "../navigation";
 import styles from "./Index.module.scss";
 
 interface HeaderInterface {
-	children: React.ReactChild | React.ReactChild[];
+	children?: React.ReactChild | React.ReactChild[];
 }
 
 const Header = ({ children }: HeaderInterface) => {

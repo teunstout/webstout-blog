@@ -4,6 +4,7 @@ import styles from "./Index.module.scss";
 export enum IconEnum {
 	logo = "logo",
 	instagram = "instagram",
+	github = "github",
 }
 
 interface IconInterface {
@@ -15,13 +16,26 @@ interface IconInterface {
 }
 
 const Icon = ({ icon, height, width, className, hover }: IconInterface) => {
+	const iconURL = (): string => {
+		switch (icon) {
+			case IconEnum.instagram:
+				return "/icon/instagram.svg";
+			case IconEnum.logo:
+				return "/icon/logo.svg";
+			case IconEnum.github:
+				return "/img/github.png";
+			default:
+				return "";
+		}
+	};
+
 	return (
 		<Image
 			className={`${styles["icon"]} ${
 				hover ? styles["icon-hover"] : ""
 			} ${className}`}
 			alt={`icon-${icon}`}
-			src={`/icon/${icon}.svg`}
+			src={iconURL()}
 			height={height}
 			width={width}
 		/>
