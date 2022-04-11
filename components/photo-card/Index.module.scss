@@ -1,0 +1,34 @@
+@use "styles/variables" as var;
+
+.photo-card {
+    cursor: pointer;
+}
+
+.photo-wrapper {
+    position: relative;
+    width: 20rem;
+    height: 12rem;
+}
+
+.photo-wrapper::after {
+    position: absolute;
+    left: 0;
+    top: 0;
+    content: "";
+    height: 100%;
+    width: 100%;
+    background-color: rgba($color: var.$on-primary, $alpha: 0.1);
+    clip-path: polygon(200% 0, 0 0, 0 200%);
+    transition: clip-path 500ms ease-in;
+}
+
+.photo-card > h2 {
+    margin-top: 0.25em;
+}
+
+.photo-card > p {
+}
+
+.photo-card:hover .photo-wrapper::after {
+    clip-path: polygon(160% 0, 0 0, 0 160%);
+}

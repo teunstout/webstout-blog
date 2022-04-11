@@ -1,0 +1,48 @@
+@use "styles/variables" as var;
+
+.photos-h1 {
+    font-weight: 500;
+    font-size: 1.5rem;
+}
+
+.photos-container > p {
+    font-size: 0.8rem;
+}
+
+.photos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.photo-wrapper {
+    position: relative;
+    width: 14rem;
+    height: 10rem;
+    cursor: pointer;
+    transition: 0.25s;
+    border: 2px solid transparent;
+
+    &:hover {
+        transform: translateY(-0.25em);
+    }
+}
+
+.photo-selected {
+    border: 2px solid var.$on-secondary;
+}
+
+.photos-text {
+    grid-column: 2 span;
+    text-align: center;
+    place-self: center;
+}
+
+.photos-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 10rem);
+    justify-content: center;
+    gap: 1rem;
+    padding: 1rem;
+}

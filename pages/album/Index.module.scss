@@ -1,34 +1,34 @@
 @use "styles/variables" as var;
 
 .main {
-	display: grid;
-	justify-content: center;
-	text-align: center;
+    display: grid;
+    justify-content: center;
+    text-align: center;
 }
 
 .main-content {
-	display: grid;
+    display: grid;
 }
 
 .main-header {
-	margin: 2rem 0;
+    margin: 2rem 0;
 
-	> p {
-		font-size: 1rem;
-		font-weight: 600;
-		font-style: italic;
-		color: var.$on-secondary;
-	}
+    > p {
+        font-size: 1rem;
+        font-weight: 600;
+        font-style: italic;
+        color: var.$on-secondary;
+    }
 }
 
 .main-photo-cards {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
-	gap: 2rem;
-	padding: 0 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+    padding: 0 2rem;
 }
 
 .main-button {
-	margin: 2rem auto;
+    margin: 2rem auto;
 }

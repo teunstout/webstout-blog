@@ -1,19 +1,19 @@
 @use "styles/variables" as var;
 
 .input-date {
-	display: block;
-	padding: 0.375rem 0;
-	font-size: 1rem;
-	line-height: 1.5;
-	color: var.$on-surface;
-	cursor: pointer;
-	outline: none;
+    display: block;
+    padding: 0.375rem 0;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var.$on-surface;
+    cursor: pointer;
+    outline: none;
 
-	&[type="file"]::file-selector-button {
-		border-radius: 0.25rem;
-		color: var.$on-surface;
-		background-color: var.$background;
-		background-clip: padding-box;
-		border: 1px solid #ced4da;
-	}
+    &[type="file"]::file-selector-button {
+        border-radius: 0.25rem;
+        color: var.$on-surface;
+        background-color: var.$background;
+        background-clip: padding-box;
+        border: 1px solid var.$surface;
+    }
 }
