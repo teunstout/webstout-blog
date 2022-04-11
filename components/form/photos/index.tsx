@@ -12,9 +12,8 @@ interface FormPhotosInterface {
 
 const FormPhotos = ({ previousStep }: FormPhotosInterface) => {
     const dispatch = useDispatch();
-    const form = useSelector((state: StoreState) => state.uploadForm);
-
     const storage = getStorage();
+    const form = useSelector((state: StoreState) => state.uploadForm);
 
     function writeAlbum() {
         form.images.forEach(photo => uploadPhoto(photo));
@@ -24,13 +23,9 @@ const FormPhotos = ({ previousStep }: FormPhotosInterface) => {
     // https://stackoverflow.com/questions/11876175/how-to-get-a-file-or-blob-from-an-object-url
     const uploadPhoto = async (photo: ImageInterface) => {
         const storageRef = ref(storage, photo.filename.toLowerCase());
+        const blob = await fetch(photo.url).then(r => r.blob());
 
-        // TODO: Change so uploading picture wont fail
-        const blob: any = await fetch(photo.url);
-
-        uploadBytes(storageRef, blob).then(snapshot => {
-            console.log("Uploaded a blob or file!");
-        });
+        uploadBytes(storageRef, blob).catch(err => console.warn(err));
     };
 
     return (

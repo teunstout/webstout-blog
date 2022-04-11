@@ -46,7 +46,6 @@ const Form = ({ nextStep }: FormUploadInterface) => {
     };
 
     const handleImagesChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        console.log(event.target.files);
         const images: ImageInterface[] = inputImgsToBlob(event);
         dispatch(setImages(images));
     };
