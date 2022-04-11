@@ -1,12 +1,12 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import { useState } from "react";
-import FormUpload from "../../components/form/upload";
 import PageLayout from "../../components/page-layout";
 import styles from "./Index.module.scss";
 import FormPhotos from "../../components/form/photos";
 import { useSelector } from "react-redux";
 import { StoreState } from "../../redux/store";
+import Form from "../../components/form";
 
 const Upload: NextPage = () => {
     const [showPhotos, setShowPhotos] = useState<boolean>(false);
@@ -21,14 +21,8 @@ const Upload: NextPage = () => {
             </Head>
 
             <main className={styles["main"]}>
-                {showPhotos && (
-                    <FormPhotos
-                        previousStep={() => {
-                            setShowPhotos(false);
-                        }}
-                    />
-                )}
-                {!showPhotos && <FormUpload nextStep={() => setShowPhotos(true)} />}
+                {!showPhotos && <Form nextStep={() => setShowPhotos(true)} />}
+                {showPhotos && <FormPhotos previousStep={() => setShowPhotos(false)} />}
             </main>
         </PageLayout>
     );

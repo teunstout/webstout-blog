@@ -1,7 +1,7 @@
-import Button from "../../elements/button";
-import Input from "../../elements/input";
-import InputFile from "../../elements/input/file";
-import Label from "../../elements/label";
+import Button from "../elements/button";
+import Input from "../elements/input";
+import InputFile from "../elements/input/file";
+import Label from "../elements/label";
 import styles from "./Index.module.scss";
 import _ from "lodash";
 import { useDispatch } from "react-redux";
@@ -13,8 +13,8 @@ import {
     setStartDate,
     setSubtitle,
     setTitle,
-} from "../../../redux/slices/uploadFormSlice";
-import inputImgsToBlob from "../../../utils/inputImgsToBlob";
+} from "../../redux/slices/uploadFormSlice";
+import inputImgsToBlob from "../../utils/inputImgsToBlob";
 
 const DEBOUNCE_TIMER = 250;
 
@@ -22,7 +22,7 @@ interface FormUploadInterface {
     nextStep: () => void;
 }
 
-const FormUpload = ({ nextStep }: FormUploadInterface) => {
+const Form = ({ nextStep }: FormUploadInterface) => {
     const dispatch = useDispatch();
 
     const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,6 +46,7 @@ const FormUpload = ({ nextStep }: FormUploadInterface) => {
     };
 
     const handleImagesChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        console.log(event.target.files);
         const images: ImageInterface[] = inputImgsToBlob(event);
         dispatch(setImages(images));
     };
@@ -114,4 +115,4 @@ const FormUpload = ({ nextStep }: FormUploadInterface) => {
     );
 };
 
-export default FormUpload;
+export default Form;
