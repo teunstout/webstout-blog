@@ -1,4 +1,3 @@
-import { createBlobFromInputImages } from "../../../utils/blob-input-images";
 import Button from "../../elements/button";
 import Input from "../../elements/input";
 import InputFile from "../../elements/input/file";
@@ -8,12 +7,14 @@ import _ from "lodash";
 import { useDispatch } from "react-redux";
 import React from "react";
 import {
+    ImageInterface,
     setEndDate,
     setImages,
     setStartDate,
     setSubtitle,
     setTitle,
-} from "../../../utils/redux/slices/upload-form.slice";
+} from "../../../redux/slices/uploadFormSlice";
+import inputImgsToBlob from "../../../utils/inputImgsToBlob";
 
 const DEBOUNCE_TIMER = 250;
 
@@ -45,7 +46,7 @@ const FormUpload = ({ nextStep }: FormUploadInterface) => {
     };
 
     const handleImagesChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const images: string[] = createBlobFromInputImages(event);
+        const images: ImageInterface[] = inputImgsToBlob(event);
         dispatch(setImages(images));
     };
 

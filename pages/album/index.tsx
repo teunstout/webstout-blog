@@ -7,14 +7,14 @@ import styles from "./Index.module.scss";
 
 const Album: NextPage = () => {
     return (
-        <PageLayout img="/img/sweden-panorama.jpeg">
-            <main className={styles["main"]}>
-                <Head>
-                    <title>Webstout Blog - Photo Albums</title>
-                    <meta name="Home" content="Homescreen of blog" />
-                    <link rel="icon" href="/logo.svg" />
-                </Head>
+        <PageLayout>
+            <Head>
+                <title>Webstout Blog - Photo Albums</title>
+                <meta name="Home" content="Homescreen of blog" />
+                <link rel="icon" href="/logo.svg" />
+            </Head>
 
+            <main className={styles["main"]}>
                 <section>
                     <header className={styles["main-header"]}>
                         <h1>Albums</h1>

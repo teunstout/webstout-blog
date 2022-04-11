@@ -1,12 +1,17 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
+export interface ImageInterface {
+    filename: string;
+    url: string;
+}
 
 export interface UploadFormInterface {
     title: string;
     subtitle: string;
     startDate: string;
     endDate: string;
-    images: string[];
-    banner: string;
+    images: ImageInterface[];
+    banner: ImageInterface;
 }
 
 const initialState: UploadFormInterface = {
@@ -15,32 +20,35 @@ const initialState: UploadFormInterface = {
     startDate: "",
     endDate: "",
     images: [],
-    banner: "",
+    banner: {
+        filename: "",
+        url: "",
+    },
 };
 
 export const uploadFormSlice = createSlice({
     name: "form-slice",
     initialState: initialState,
     reducers: {
-        setTitle: (state, action) => {
+        setTitle: (state, action: PayloadAction<string>) => {
             state.title = action.payload;
         },
-        setSubtitle: (state, action) => {
+        setSubtitle: (state, action: PayloadAction<string>) => {
             state.subtitle = action.payload;
         },
-        setStartDate: (state, action) => {
+        setStartDate: (state, action: PayloadAction<string>) => {
             state.startDate = action.payload;
         },
-        setEndDate: (state, action) => {
+        setEndDate: (state, action: PayloadAction<string>) => {
             state.endDate = action.payload;
         },
-        setImages: (state, action) => {
+        setImages: (state, action: PayloadAction<ImageInterface[]>) => {
             state.images = action.payload;
         },
-        updateImages: (state, action) => {
-            state.images = [...state.images, action.payload];
+        updateImages: (state, action: PayloadAction<ImageInterface[]>) => {
+            state.images = [...state.images, ...action.payload];
         },
-        setBanner: (state, action) => {
+        setBanner: (state, action: PayloadAction<ImageInterface>) => {
             state.banner = action.payload;
         },
     },

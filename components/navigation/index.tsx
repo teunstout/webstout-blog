@@ -14,32 +14,33 @@ interface IconItemInterface {
     icon: IconEnum;
 }
 
-const Navigation = () => {
-    const navItems: NavItemInterface[] = [
-        {
-            path: "/",
-            label: "Home",
-        },
-        {
-            path: "/album",
-            label: "Albums",
-        },
-        {
-            path: "/blog",
-            label: "Blog",
-        },
-    ];
-    const iconItems: IconItemInterface[] = [
-        {
-            url: "https://www.instagram.com/teun_stout",
-            icon: IconEnum.instagram,
-        },
-        {
-            url: "https://github.com/teunstout",
-            icon: IconEnum.github,
-        },
-    ];
+const navItems: NavItemInterface[] = [
+    {
+        path: "/",
+        label: "Home",
+    },
+    {
+        path: "/album",
+        label: "Albums",
+    },
+    {
+        path: "/blog",
+        label: "Blog",
+    },
+];
 
+const iconItems: IconItemInterface[] = [
+    {
+        url: "https://www.instagram.com/teun_stout",
+        icon: IconEnum.instagram,
+    },
+    {
+        url: "https://github.com/teunstout",
+        icon: IconEnum.github,
+    },
+];
+
+const Navigation = () => {
     // TODO: Fucks mobile
     return (
         <nav className={styles["navigation-main"]}>
