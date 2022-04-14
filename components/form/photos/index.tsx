@@ -2,9 +2,14 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "../../elements/button";
 import styles from "./Index.module.scss";
-import { getStorage, ref, uploadBytes } from "firebase/storage";
 import { StoreState } from "../../../redux/store";
-import { ImageInterface, setBanner } from "../../../redux/slices/uploadFormSlice";
+import {
+    ImageInterface,
+    resetUploadFormState,
+    setBanner,
+} from "../../../redux/slices/uploadFormSlice";
+import uploadAlbum from "../../../utils/uploadAlbum";
+import { useEffect } from "react";
 
 interface FormPhotosInterface {
     previousStep: () => void;
@@ -12,20 +17,11 @@ interface FormPhotosInterface {
 
 const FormPhotos = ({ previousStep }: FormPhotosInterface) => {
     const dispatch = useDispatch();
-    const storage = getStorage();
     const form = useSelector((state: StoreState) => state.uploadForm);
 
-    function writeAlbum() {
-        form.images.forEach(photo => uploadPhoto(photo));
-    }
-
-    //TODO: Create better way of storing blob is stored 2 times
-    // https://stackoverflow.com/questions/11876175/how-to-get-a-file-or-blob-from-an-object-url
-    const uploadPhoto = async (photo: ImageInterface) => {
-        const storageRef = ref(storage, photo.filename.toLowerCase());
-        const blob = await fetch(photo.url).then(r => r.blob());
-
-        uploadBytes(storageRef, blob).catch(err => console.warn(err));
+    const uploadFormAndReset = () => {
+        uploadAlbum(form);
+        dispatch(resetUploadFormState());
     };
 
     return (
@@ -43,7 +39,7 @@ const FormPhotos = ({ previousStep }: FormPhotosInterface) => {
                     </section>
                 )}
 
-                {form.images.map((image, index) => (
+                {form.images.map((image: ImageInterface, index: number) => (
                     <a
                         key={index}
                         className={`${styles["photo-wrapper"]} ${
@@ -53,8 +49,11 @@ const FormPhotos = ({ previousStep }: FormPhotosInterface) => {
                         <Image
                             alt={"photo selected"}
                             src={image.url}
-                            layout="fill"
-                            objectFit="cover"
+                            layout="responsive"
+                            width={320}
+                            height={180}
+                            objectFit="contain"
+                            objectPosition="bottom"
                         />
                     </a>
                 ))}
@@ -62,7 +61,7 @@ const FormPhotos = ({ previousStep }: FormPhotosInterface) => {
 
             <div className={styles["photos-buttons"]}>
                 <Button onClick={previousStep}>Previous Step</Button>
-                <Button onClick={writeAlbum}>Submit</Button>
+                <Button onClick={uploadFormAndReset}>Submit</Button>
             </div>
         </article>
     );

@@ -4,10 +4,9 @@ import InputFile from "../elements/input/file";
 import Label from "../elements/label";
 import styles from "./Index.module.scss";
 import _ from "lodash";
-import { useDispatch } from "react-redux";
-import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
 import {
-    ImageInterface,
     setEndDate,
     setImages,
     setStartDate,
@@ -15,6 +14,8 @@ import {
     setTitle,
 } from "../../redux/slices/uploadFormSlice";
 import inputImgsToBlob from "../../utils/inputImgsToBlob";
+import { StoreState } from "../../redux/store";
+import formButtonDisabled from "../../utils/formButtonDisabled";
 
 const DEBOUNCE_TIMER = 250;
 
@@ -24,30 +25,31 @@ interface FormUploadInterface {
 
 const Form = ({ nextStep }: FormUploadInterface) => {
     const dispatch = useDispatch();
+    const [disabledBtn, setDisabledBtn] = useState<boolean>(true);
+    const formData = useSelector((state: StoreState) => state.uploadForm);
+
+    useEffect(() => {
+        setDisabledBtn(formButtonDisabled(formData));
+    }, [formData]);
 
     const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const { value } = event.target;
-        dispatch(setTitle(value));
+        dispatch(setTitle(event.target.value));
     };
 
     const handleSubtitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const { value } = event.target;
-        dispatch(setSubtitle(value));
+        dispatch(setSubtitle(event.target.value));
     };
 
     const handleStartDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const { value } = event.target;
-        dispatch(setStartDate(value));
+        dispatch(setStartDate(event.target.value));
     };
 
     const handleEndDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const { value } = event.target;
-        dispatch(setEndDate(value));
+        dispatch(setEndDate(event.target.value));
     };
 
     const handleImagesChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const images: ImageInterface[] = inputImgsToBlob(event);
-        dispatch(setImages(images));
+        dispatch(setImages(inputImgsToBlob(event)));
     };
 
     // TODO: Check input for special charactersF
@@ -107,7 +109,7 @@ const Form = ({ nextStep }: FormUploadInterface) => {
             <InputFile multiple={true} accept="image/*" onChange={handleImagesChange} required />
 
             {/* TODO: Implement disabled when form filled incorrect */}
-            <Button className={styles["form-button"]} onClick={nextStep}>
+            <Button className={styles["form-button"]} onClick={nextStep} disabled={disabledBtn}>
                 Next
             </Button>
         </form>

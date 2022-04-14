@@ -16,17 +16,20 @@
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 1rem;
     padding: 1rem;
+    align-items: flex-start;
 }
 
 .photo-wrapper {
     position: relative;
-    width: 20rem;
-    height: 11rem;
+    width: 100%;
+    max-width: 20rem;
+    height: 100%;
+    max-height: 12rem;
     cursor: pointer;
     transition: 0.25s;
     border: 2px solid transparent;
+    height: auto;
 
     &:hover {
         transform: translateY(-0.25em);

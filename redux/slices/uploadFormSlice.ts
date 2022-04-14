@@ -51,6 +51,9 @@ export const uploadFormSlice = createSlice({
         setBanner: (state, action: PayloadAction<ImageInterface>) => {
             state.banner = action.payload;
         },
+        resetUploadFormState: state => {
+            state = initialState;
+        },
     },
 });
 
@@ -63,6 +66,7 @@ export const {
     setImages,
     updateImages,
     setBanner,
+    resetUploadFormState,
 } = uploadFormSlice.actions;
 
 export default uploadFormSlice.reducer;
