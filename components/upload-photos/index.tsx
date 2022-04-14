@@ -1,20 +1,20 @@
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
-import Button from "../../elements/button";
-import styles from "./Index.module.scss";
-import { StoreState } from "../../../redux/store";
 import {
     ImageInterface,
     resetUploadFormState,
     setBanner,
-} from "../../../redux/slices/uploadFormSlice";
-import uploadAlbum from "../../../utils/uploadAlbum";
+} from "../../redux/slices/uploadFormSlice";
+import { StoreState } from "../../redux/store";
+import uploadAlbum from "../../utils/uploadAlbum";
+import Button from "../elements/button";
+import styles from "./Index.module.scss";
 
 interface FormPhotosInterface {
     previousStep: () => void;
 }
 
-const FormPhotos = ({ previousStep }: FormPhotosInterface) => {
+const UploadPhotos = ({ previousStep }: FormPhotosInterface) => {
     const dispatch = useDispatch();
     const form = useSelector((state: StoreState) => state.uploadForm);
 
@@ -66,4 +66,4 @@ const FormPhotos = ({ previousStep }: FormPhotosInterface) => {
     );
 };
 
-export default FormPhotos;
+export default UploadPhotos;

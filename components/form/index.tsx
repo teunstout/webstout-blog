@@ -12,6 +12,7 @@ import {
     setStartDate,
     setSubtitle,
     setTitle,
+    UploadFormInterface,
 } from "../../redux/slices/uploadFormSlice";
 import inputImgsToBlob from "../../utils/inputImgsToBlob";
 import { StoreState } from "../../redux/store";
@@ -21,16 +22,16 @@ const DEBOUNCE_TIMER = 250;
 
 interface FormUploadInterface {
     nextStep: () => void;
+    form: UploadFormInterface;
 }
 
-const Form = ({ nextStep }: FormUploadInterface) => {
+const Form = ({ nextStep, form }: FormUploadInterface) => {
     const dispatch = useDispatch();
     const [disabledBtn, setDisabledBtn] = useState<boolean>(true);
-    const formData = useSelector((state: StoreState) => state.uploadForm);
 
     useEffect(() => {
-        setDisabledBtn(formButtonDisabled(formData));
-    }, [formData]);
+        setDisabledBtn(formButtonDisabled(form));
+    }, [form]);
 
     const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         dispatch(setTitle(event.target.value));
@@ -65,6 +66,7 @@ const Form = ({ nextStep }: FormUploadInterface) => {
                     id="title"
                     placeholder="Title"
                     onChange={_.debounce(handleTitleChange, DEBOUNCE_TIMER)}
+                    defaultValue={form.title}
                     required
                 />
             </div>
@@ -77,6 +79,7 @@ const Form = ({ nextStep }: FormUploadInterface) => {
                     id="subtitle"
                     placeholder="Small description"
                     onChange={_.debounce(handleSubtitleChange, DEBOUNCE_TIMER)}
+                    defaultValue={form.subtitle}
                     required
                 />
             </div>
@@ -90,6 +93,7 @@ const Form = ({ nextStep }: FormUploadInterface) => {
                         id="start-date"
                         type="date"
                         onChange={_.debounce(handleStartDateChange, DEBOUNCE_TIMER)}
+                        defaultValue={form.startDate}
                         required
                     />
                 </div>
@@ -101,6 +105,7 @@ const Form = ({ nextStep }: FormUploadInterface) => {
                         id="end-date"
                         type="date"
                         onChange={_.debounce(handleEndDateChange, DEBOUNCE_TIMER)}
+                        defaultValue={form.endDate}
                         required
                     />
                 </div>

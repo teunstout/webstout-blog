@@ -6,14 +6,14 @@ import { initializeApp } from "firebase/app";
 import store from "../redux/store";
 
 const firebaseConfig = {
-    apiKey: "",
-    authDomain: "",
-    databaseURL: "",
-    projectId: "",
-    storageBucket: "",
-    messagingSenderId: "",
-    appId: "",
-    measurementId: "",
+    apiKey: "AIzaSyB4-1AfpcZ5wo2jk9wA-tdhzc49x8MQMHg",
+    authDomain: "webstout-blog.firebaseapp.com",
+    databaseURL: "https://webstout-blog-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "webstout-blog",
+    storageBucket: "gs://webstout-blog.appspot.com/",
+    messagingSenderId: "621119557656",
+    appId: "1:621119557656:web:8d5ce468941a14957f736d",
+    measurementId: "G-RMRV5BSGWT",
 };
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -21,7 +21,9 @@ function MyApp({ Component, pageProps }: AppProps) {
 
     return (
         <Provider store={store}>
-            <Component {...pageProps} />
+            <div className="background">
+                <Component {...pageProps} />
+            </div>
         </Provider>
     );
 }

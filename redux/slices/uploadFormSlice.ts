@@ -45,9 +45,8 @@ export const uploadFormSlice = createSlice({
             state.endDate = action.payload;
         },
         setImages: (state, action: PayloadAction<ImageInterface[]>) => {
+            state.images.forEach(img => URL.revokeObjectURL(img.url));
             const images = action.payload.sort((a, b) => a.lastModified - b.lastModified);
-            console.log(images);
-
             state.images = images;
         },
         updateImages: (state, action: PayloadAction<ImageInterface[]>) => {

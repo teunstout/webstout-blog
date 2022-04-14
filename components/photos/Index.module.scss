@@ -1,0 +1,29 @@
+@use "styles/variables" as var;
+
+$max-column-count: 3;
+.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit);
+    justify-content: center;
+    gap: 1rem;
+    padding: 0 1rem;
+}
+
+.photo-wrapper {
+    position: relative;
+    transition: 0.25s;
+    height: 18rem;
+    width: 18rem;
+}
+
+@media (min-width: var.$small-screen) {
+    .photo-gird {
+        grid-auto-flow: column;
+    }
+
+    @for $i from 1 through $max-column-count {
+        .photo-wrapper:nth-child(#{$max-column-count}n + #{$i}) {
+            grid-column: $i;
+        }
+    }
+}
