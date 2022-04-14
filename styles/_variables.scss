@@ -1,26 +1,25 @@
 /* Screen sizes */
-$screen-mobile: 24.375rem; // Iphone 12 pro
-$ipad-mobile: 51.25rem; // Ipad pro max
-$desktop: 120rem; // 1920px * 1080px
+$small-screen: 36rem;
+$medium-screen: 60rem;
+$desktop: 120rem;
 
 /* Width content */
 $content-width: 80rem; // Ipad pro max
 
 /* Colors */
-$primary: #0c60c2;
-
-$primary-variant: #0c60c2;
-$secondary: #0c60c2;
-$secondary-variant: #0c60c2;
-$background: #0c60c2;
-$surface: #0c60c2;
-$error: #0c60c2;
+$primary: white;
+// $primary-variant: black;
+$secondary: black;
+// $secondary-variant: ;
+$background: white;
+$surface: #ced4da;
+// $error: ;
 
 $on-primary: black;
 $on-secondary: #ffa260;
-$on-background: #0c60c2;
-$on-surface: #0c60c2;
-$on-error: #0c60c2;
+// $on-background: ;
+$on-surface: #495057;
+// $on-error: ;
 
 /* Button */
 $primary-button: #ffa260;

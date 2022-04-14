@@ -1,0 +1,12 @@
+@use "styles/variables" as var;
+
+.icon {
+    cursor: pointer;
+    transition: transform 200ms;
+    color: var.$on-primary;
+    fill: var.$on-primary;
+}
+
+.icon-hover:hover {
+    transform: scale(1.05);
+}

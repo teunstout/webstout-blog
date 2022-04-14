@@ -1,0 +1,55 @@
+@use "styles/variables" as var;
+
+.photos-h1 {
+    text-align: center;
+    font-weight: 500;
+    font-size: 1.5rem;
+}
+
+.photos-container > p {
+    text-align: center;
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
+}
+
+.photos {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 1rem;
+    align-items: flex-start;
+}
+
+.photo-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 20rem;
+    height: 100%;
+    max-height: 12rem;
+    cursor: pointer;
+    transition: 0.25s;
+    border: 2px solid transparent;
+    height: auto;
+
+    &:hover {
+        transform: translateY(-0.25em);
+    }
+}
+
+.photo-selected {
+    border: 2px solid var.$on-secondary;
+}
+
+.photos-text {
+    grid-column: 2 span;
+    text-align: center;
+    place-self: center;
+}
+
+.photos-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 10rem);
+    justify-content: center;
+    gap: 1rem;
+    padding: 1rem;
+}

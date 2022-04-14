@@ -1,0 +1,26 @@
+@use "styles/variables" as var;
+
+.button {
+    appearance: button;
+    font-size: 1rem;
+    padding: 0.5em 1.5em;
+    font-weight: 600;
+    background-color: transparent;
+    color: var.$on-primary;
+    border: 1px solid var.$on-primary;
+    cursor: pointer;
+    transition: 0.25s;
+    border-radius: 0.25rem;
+    text-align: center;
+
+    &:hover {
+        box-shadow: 0 0.5em 0.5em -0.4em var.$on-secondary;
+        color: var.$on-secondary;
+        border-color: var.$on-secondary;
+        transform: translateY(-0.25em);
+    }
+}
+
+.disabled {
+    pointer-events: none;
+}
