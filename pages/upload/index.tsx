@@ -16,7 +16,7 @@ const Upload: NextPage = () => {
         <PageLayout className={styles["layout"]} img={banner.url !== "" ? banner.url : undefined}>
             <Head>
                 <title>Webstout Blog - Upload</title>
-                <meta name="Home" content="Homescreen of blog" />
+                <meta name="Upload Albums" content="Upload albums to the firebase storage" />
                 <link rel="icon" href="/logo.svg" />
             </Head>
 

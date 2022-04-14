@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface ImageInterface {
     filename: string;
+    lastModified: number;
     url: string;
 }
 
@@ -22,6 +23,7 @@ const initialState: UploadFormInterface = {
     images: [],
     banner: {
         filename: "",
+        lastModified: 0,
         url: "",
     },
 };
@@ -43,10 +45,16 @@ export const uploadFormSlice = createSlice({
             state.endDate = action.payload;
         },
         setImages: (state, action: PayloadAction<ImageInterface[]>) => {
-            state.images = action.payload;
+            const images = action.payload.sort((a, b) => a.lastModified - b.lastModified);
+            console.log(images);
+
+            state.images = images;
         },
         updateImages: (state, action: PayloadAction<ImageInterface[]>) => {
-            state.images = [...state.images, ...action.payload];
+            const images = [...state.images, ...action.payload].sort(
+                (a, b) => a.lastModified - b.lastModified
+            );
+            state.images = images;
         },
         setBanner: (state, action: PayloadAction<ImageInterface>) => {
             state.banner = action.payload;

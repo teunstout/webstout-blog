@@ -9,7 +9,6 @@ import {
     setBanner,
 } from "../../../redux/slices/uploadFormSlice";
 import uploadAlbum from "../../../utils/uploadAlbum";
-import { useEffect } from "react";
 
 interface FormPhotosInterface {
     previousStep: () => void;
