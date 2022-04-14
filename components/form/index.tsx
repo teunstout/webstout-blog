@@ -4,7 +4,7 @@ import InputFile from "../elements/input/file";
 import Label from "../elements/label";
 import styles from "./Index.module.scss";
 import _ from "lodash";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import React, { useEffect, useState } from "react";
 import {
     setEndDate,
@@ -13,10 +13,9 @@ import {
     setSubtitle,
     setTitle,
     UploadFormInterface,
-} from "../../redux/slices/uploadFormSlice";
-import inputImgsToBlob from "../../utils/inputImgsToBlob";
-import { StoreState } from "../../redux/store";
-import formButtonDisabled from "../../utils/formButtonDisabled";
+} from "../../redux/slices/formSlice";
+import inputImgsToBlob from "../../utils/functions/inputImgsToBlob";
+import formButtonDisabled from "../../utils/functions/formButtonDisabled";
 
 const DEBOUNCE_TIMER = 250;
 

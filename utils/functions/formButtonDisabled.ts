@@ -1,6 +1,6 @@
-import { UploadFormSliceInterface } from "../redux/slices/uploadFormSlice";
+import { UploadFormInterface } from "../../redux/slices/formSlice";
 
-export const formButtonDisabled = (formState: UploadFormSliceInterface): boolean => {
+export const formButtonDisabled = (formState: UploadFormInterface): boolean => {
     const { title, subtitle, startDate, endDate, images } = formState;
     return (
         title.length === 0 ||

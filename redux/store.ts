@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import uploadFormSlice, { UploadFormInterface } from "./slices/uploadFormSlice";
+import uploadFormSlice, { UploadFormInterface } from "./slices/formSlice";
 
 export interface StoreState {
     uploadForm: UploadFormInterface;

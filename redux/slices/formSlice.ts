@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { Action, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface ImageInterface {
     filename: string;
@@ -13,6 +13,7 @@ export interface UploadFormInterface {
     endDate: string;
     images: ImageInterface[];
     banner: ImageInterface;
+    createdAt: string;
 }
 
 const initialState: UploadFormInterface = {
@@ -26,6 +27,7 @@ const initialState: UploadFormInterface = {
         lastModified: 0,
         url: "",
     },
+    createdAt: "",
 };
 
 export const uploadFormSlice = createSlice({
@@ -58,8 +60,17 @@ export const uploadFormSlice = createSlice({
         setBanner: (state, action: PayloadAction<ImageInterface>) => {
             state.banner = action.payload;
         },
-        resetUploadFormState: state => {
-            state = initialState;
+        setCreatedAt: (state, action: PayloadAction<string>) => {
+            state.createdAt = action.payload;
+        },
+        resetUploadFormState: (state, action: Action) => {
+            state.title = initialState.title;
+            state.subtitle = initialState.subtitle;
+            state.startDate = initialState.startDate;
+            state.endDate = initialState.endDate;
+            state.banner = initialState.banner;
+            state.images = initialState.images;
+            state.createdAt = initialState.createdAt;
         },
     },
 });
@@ -74,6 +85,7 @@ export const {
     updateImages,
     setBanner,
     resetUploadFormState,
+    setCreatedAt,
 } = uploadFormSlice.actions;
 
 export default uploadFormSlice.reducer;

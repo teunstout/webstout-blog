@@ -1,8 +1,8 @@
 import styles from "./Index.module.scss";
-import { resetUploadFormState, UploadFormInterface } from "../../redux/slices/uploadFormSlice";
+import { resetUploadFormState, UploadFormInterface } from "../../redux/slices/formSlice";
 import Icon, { IconEnum } from "../elements/icon";
 import Button from "../elements/button";
-import uploadAlbum from "../../utils/uploadAlbum";
+import uploadAlbum from "../../utils/functions/uploadAlbum";
 import { useDispatch } from "react-redux";
 import Photos from "../photos";
 import { Dispatch, SetStateAction } from "react";
@@ -21,8 +21,8 @@ const FormPhotos = ({ form, setShowPhotos }: FormPhotosInterface) => {
             : "No photo's, go back and upload photo's";
     };
 
-    const uploadFormAndReset = () => {
-        uploadAlbum(form);
+    const uploadFormAndReset = async () => {
+        await uploadAlbum(form);
         dispatch(resetUploadFormState());
     };
 
