@@ -67,7 +67,9 @@ const Album: NextPage = () => {
                         ))}
                 </section>
 
-                <Button className={styles["main-button"]}>Load More</Button>
+                {albums && albums.length > 3 && (
+                    <Button className={styles["main-button"]}>Load More</Button>
+                )}
             </main>
         </PageLayout>
     );
