@@ -73,7 +73,6 @@ const Navigation = () => {
                     ))}
                 </ul>
             </div>
-
             {/* TODO: When admin show button */}
             {true && (
                 <Button className={styles["upload-button"]} href="/upload">

@@ -5,7 +5,9 @@ import Button from "../elements/button";
 import uploadAlbum from "../../utils/functions/uploadAlbum";
 import { useDispatch } from "react-redux";
 import Photos from "../photos";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
+import { PathsEnum } from "../../utils/enums/paths";
+import RollerText from "../roller-text";
 
 interface FormPhotosInterface {
     form: UploadFormInterface;
@@ -14,6 +16,7 @@ interface FormPhotosInterface {
 
 const FormPhotos = ({ form, setShowPhotos }: FormPhotosInterface) => {
     const dispatch = useDispatch();
+    const [loading, setLoading] = useState<boolean>(false);
 
     const displayPhotoMessage = (): string => {
         return form.images && form.images.length
@@ -22,13 +25,19 @@ const FormPhotos = ({ form, setShowPhotos }: FormPhotosInterface) => {
     };
 
     const uploadFormAndReset = async () => {
+        setLoading(true);
         await uploadAlbum(form);
         dispatch(resetUploadFormState());
+        window.location.href = PathsEnum.album;
     };
 
     const selectPhoto = (index: number) => {
         dispatch(setBanner(form.images[index]));
     };
+
+    if (loading) {
+        return <RollerText text="This might take a while, don't click away" />;
+    }
 
     return (
         <>
