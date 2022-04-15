@@ -1,13 +1,13 @@
 @use "styles/variables" as var;
 
+.main {
+    display: grid;
+    padding: 1rem 1rem 3rem 1rem;
+    background-color: var.$primary;
+    gap: 2rem;
+}
+
 .layout {
     display: flex;
     flex-direction: column;
-}
-
-.main {
-    display: grid;
-    flex-grow: 1;
-    gap: 2rem;
-    padding: 2rem;
 }

@@ -7,9 +7,9 @@
     font-size: 1rem;
     line-height: 1.5;
     color: var.$on-surface;
-    background-color: var.$background;
+    background-color: var.$primary;
     background-clip: padding-box;
-    border: 1px solid var.$surface;
+    border: 1px solid var.$primary-variant;
     border-radius: 0.25rem;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
     outline: none;

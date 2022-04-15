@@ -12,8 +12,8 @@
     &[type="file"]::file-selector-button {
         border-radius: 0.25rem;
         color: var.$on-surface;
-        background-color: var.$background;
+        background-color: var.$primary;
         background-clip: padding-box;
-        border: 1px solid var.$surface;
+        border: 1px solid var.$primary-variant;
     }
 }

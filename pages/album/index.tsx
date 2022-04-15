@@ -4,8 +4,43 @@ import Button from "../../components/elements/button";
 import PageLayout from "../../components/page-layout";
 import PhotoCard from "../../components/photo-card";
 import styles from "./Index.module.scss";
+import { getStorage, ref as refStorage, getDownloadURL } from "firebase/storage";
+import { getDatabase, onValue, ref as refDatabase } from "firebase/database";
+import { PathsEnum } from "../../utils/enums/paths";
+import { AlbumInterface } from "../../redux/slices/albumSlice";
+import { useEffect, useState } from "react";
 
 const Album: NextPage = () => {
+    const database = getDatabase();
+    const storage = getStorage();
+    const databaseRef = refDatabase(database, `/${PathsEnum.album}`);
+    const [albums, setAlbums] = useState<AlbumInterface[]>();
+    const [loading, setLoading] = useState<boolean>(true);
+
+    useEffect(() => {
+        setLoading(true);
+        onValue(databaseRef, async snapshot => {
+            if (!snapshot.exists) return;
+            const albumObjects: AlbumInterface[] = Object.values(snapshot.val());
+
+            const albumPromises: Promise<AlbumInterface>[] = albumObjects.map(async album => {
+                const storageRef = refStorage(storage, `${album.banner}`);
+                album.banner = await getDownloadURL(storageRef);
+                return album;
+            });
+
+            const albumResults = await Promise.allSettled(albumPromises);
+            const albums: AlbumInterface[] = [];
+
+            albumResults.forEach(album => {
+                if (album.status !== "fulfilled") return;
+                albums.push((album as PromiseFulfilledResult<AlbumInterface>).value);
+            });
+            setAlbums(albums);
+        });
+        setLoading(false);
+    }, []);
+
     return (
         <PageLayout>
             <Head>
@@ -15,32 +50,26 @@ const Album: NextPage = () => {
             </Head>
 
             <main className={styles["main"]}>
-                <section>
-                    <header className={styles["main-header"]}>
-                        <h1>Albums</h1>
-                        <p>Photos & videos created and shot by me</p>
-                    </header>
+                <header className={styles["main-header"]}>
+                    <h1>Albums</h1>
+                    <p>Photos & videos created and shot by me</p>
+                </header>
 
-                    <div className={styles["main-photo-cards"]}>
-                        <PhotoCard
-                            image={`https://media.istockphoto.com/photos/stockholm-sweden-scenic-summer-sunset-view-with-colorful-sky-of-the-picture-id1132919653?k=20&m=1132919653&s=612x612&w=0&h=ABPX9bU-0VpqjV6_5y0BjpJo_Sz2gLOYf-JKtjKa34U=`}
-                            title="Sweden stockholm"
-                            subTitle="School trip stockholm"
-                        />
-                        <PhotoCard
-                            image={`https://media.istockphoto.com/photos/stockholm-sweden-scenic-summer-sunset-view-with-colorful-sky-of-the-picture-id1132919653?k=20&m=1132919653&s=612x612&w=0&h=ABPX9bU-0VpqjV6_5y0BjpJo_Sz2gLOYf-JKtjKa34U=`}
-                            title="Sweden stockholm"
-                            subTitle="School trip stockholm"
-                        />
-                        <PhotoCard
-                            image={`https://media.istockphoto.com/photos/stockholm-sweden-scenic-summer-sunset-view-with-colorful-sky-of-the-picture-id1132919653?k=20&m=1132919653&s=612x612&w=0&h=ABPX9bU-0VpqjV6_5y0BjpJo_Sz2gLOYf-JKtjKa34U=`}
-                            title="Sweden stockholm"
-                            subTitle="School trip stockholm"
-                        />
-                    </div>
-
-                    <Button className={styles["main-button"]}>Load More</Button>
+                <section className={styles["main-photo-cards"]}>
+                    {albums &&
+                        albums.map((album, index) => (
+                            <PhotoCard
+                                key={index}
+                                image={album.banner}
+                                title={album.title}
+                                subTitle={album.subtitle}
+                            />
+                        ))}
                 </section>
+
+                {albums && albums.length > 3 && (
+                    <Button className={styles["main-button"]}>Load More</Button>
+                )}
             </main>
         </PageLayout>
     );

@@ -4,21 +4,16 @@
     display: grid;
     justify-content: center;
     text-align: center;
+    background-color: var.$primary;
+    padding: 3rem;
+    gap: 3rem;
 }
 
-.main-content {
-    display: grid;
-}
-
-.main-header {
-    margin: 2rem 0;
-
-    > p {
-        font-size: 1rem;
-        font-weight: 600;
-        font-style: italic;
-        color: var.$on-secondary;
-    }
+.main-header > p {
+    font-size: 1rem;
+    font-weight: 600;
+    font-style: italic;
+    color: var.$on-secondary;
 }
 
 .main-photo-cards {
@@ -30,5 +25,5 @@
 }
 
 .main-button {
-    margin: 2rem auto;
+    margin: 0 auto;
 }

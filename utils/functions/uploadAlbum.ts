@@ -1,6 +1,8 @@
 import { FirebaseStorage, getStorage, ref as refStorage, uploadBytes } from "firebase/storage";
 import { getDatabase, ref as refDatabase, set } from "firebase/database";
-import { ImageInterface, UploadFormInterface } from "../redux/slices/uploadFormSlice";
+import { ImageInterface, UploadFormInterface } from "../../redux/slices/formSlice";
+import { PathsEnum } from "../enums/paths";
+import dateToLocalDate from "./dateToLocalDate";
 
 export interface UploadAlbumInterface extends AlbumImageInterface {
     title: string;
@@ -86,7 +88,10 @@ const uploadPhoto = async (
     title: string,
     storage: FirebaseStorage
 ): Promise<string> => {
-    const storageRef = refStorage(storage, `/${title}/${photo.filename.toLowerCase()}`);
+    const storageRef = refStorage(
+        storage,
+        `${PathsEnum.album}/${title}/${photo.filename.toLowerCase()}`
+    );
 
     //  TODO: Check if there is a better way to create blobs
     // https://stackoverflow.com/questions/11876175/how-to-get-a-file-or-blob-from-an-object-url
@@ -106,14 +111,17 @@ const uploadAlbum = async (form: UploadFormInterface) => {
     const database = getDatabase();
     const { banner, images } = await uploadPhotos(form);
 
-    set(refDatabase(database, `/${form.title}`), {
+    await set(refDatabase(database, `${PathsEnum.album}/${form.title}`), {
         title: form.title,
         subtitle: form.subtitle,
         startDate: form.startDate,
         endDate: form.endDate,
         images: images,
         banner: banner,
+        createdAt: dateToLocalDate(new Date(Date.now())),
     });
+
+    console.info("!--Photo's uploaded--!");
 };
 
 export default uploadAlbum;
