@@ -1,5 +1,5 @@
 import styles from "./Index.module.scss";
-import { resetUploadFormState, UploadFormInterface } from "../../redux/slices/formSlice";
+import { resetUploadFormState, setBanner, UploadFormInterface } from "../../redux/slices/formSlice";
 import Icon, { IconEnum } from "../elements/icon";
 import Button from "../elements/button";
 import uploadAlbum from "../../utils/functions/uploadAlbum";
@@ -26,6 +26,10 @@ const FormPhotos = ({ form, setShowPhotos }: FormPhotosInterface) => {
         dispatch(resetUploadFormState());
     };
 
+    const selectPhoto = (index: number) => {
+        dispatch(setBanner(form.images[index]));
+    };
+
     return (
         <>
             <div className={styles["photos-top-buttons"]}>
@@ -41,7 +45,11 @@ const FormPhotos = ({ form, setShowPhotos }: FormPhotosInterface) => {
                 <p>{displayPhotoMessage()}</p>
             </div>
 
-            <Photos images={form.images.map(img => img.url)} albumName={form.title} />
+            <Photos
+                images={form.images.map(img => img.url)}
+                albumName={form.title}
+                onSelect={selectPhoto}
+            />
 
             <div className={styles["photos-bottom-buttons"]}>
                 <Button onClick={() => setShowPhotos(false)}>Previous Step</Button>

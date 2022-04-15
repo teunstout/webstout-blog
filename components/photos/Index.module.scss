@@ -14,6 +14,19 @@ $max-column-count: 3;
     transition: 0.25s;
     height: 18rem;
     width: 18rem;
+    transition: 0.2s;
+}
+
+.photo-selected {
+    box-shadow: 0 0 0 0.2rem rgba(var.$on-secondary, 0.5);
+}
+
+.photo-select {
+    cursor: pointer;
+
+    &:hover {
+        box-shadow: 0 0 0 0.2rem rgba(var.$on-secondary, 0.5);
+    }
 }
 
 @media (min-width: var.$small-screen) {
