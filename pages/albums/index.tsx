@@ -4,52 +4,83 @@ import Button from "../../components/elements/button";
 import PageLayout from "../../components/page-layout";
 import PhotoCard from "../../components/photo-card";
 import styles from "./Index.module.scss";
-import { getStorage, ref as refStorage, getDownloadURL } from "firebase/storage";
-import { getDatabase, onValue, ref as refDatabase } from "firebase/database";
-import { PathsEnum } from "../../utils/enums/paths";
-import { AlbumInterface } from "../../redux/slices/albumSlice";
-import { useEffect, useState } from "react";
+import {
+    addAlbums,
+    setStartedFrom,
+    AlbumInterface,
+    setLoading,
+    setNoMoreAlbums,
+} from "../../redux/slices/albumSlice";
+import { useEffect } from "react";
+import { getFirestore, getDocs } from "firebase/firestore";
+import { getDownloadURL, getStorage, ref } from "firebase/storage";
+import RollerText from "../../components/roller-text";
+import { useDispatch, useSelector } from "react-redux";
+import { StoreState } from "../../redux/store";
+import { getAlbumsPagination } from "../../utils/firebase/querys";
 
 const Albums: NextPage = () => {
-    const database = getDatabase();
-    const storage = getStorage();
-    const databaseRef = refDatabase(database, `/${PathsEnum.album}`);
-    const [albums, setAlbums] = useState<AlbumInterface[]>();
-    const [loading, setLoading] = useState<boolean>(true);
+    const dispatch = useDispatch();
+    const { loading, albums, startFrom, noMoreAlbums } = useSelector(
+        (state: StoreState) => state.albums
+    );
 
     useEffect(() => {
-        setLoading(true);
-        onValue(databaseRef, async snapshot => {
-            if (!snapshot.exists) return;
-            const albumObjects: AlbumInterface[] = Object.values(snapshot.val());
-
-            const albumPromises: Promise<AlbumInterface>[] = albumObjects.map(async album => {
-                const storageRef = refStorage(storage, `${album.banner}`);
-                album.banner = await getDownloadURL(storageRef);
-                return album;
-            });
-
-            const albumResults = await Promise.allSettled(albumPromises);
-            const albums: AlbumInterface[] = [];
-
-            albumResults.forEach(album => {
-                if (album.status !== "fulfilled") return;
-                albums.push((album as PromiseFulfilledResult<AlbumInterface>).value);
-            });
-            setAlbums(albums);
-        });
-        setLoading(false);
+        getAlbums(true);
     }, []);
+
+    const getAlbums = async (initial: boolean) => {
+        if (noMoreAlbums || loading) return;
+        dispatch(setLoading(true));
+        dispatch(addAlbums(await setAlbumsBannerImage(await getAlbumsStartAt(initial))));
+        dispatch(setLoading(false));
+    };
+
+    const getAlbumsStartAt = async (initial: boolean): Promise<AlbumInterface[]> => {
+        const firestore = getFirestore();
+        const ab: AlbumInterface[] = [];
+
+        const albumsSnapshots = await getDocs(
+            getAlbumsPagination(firestore, initial ? 3 : 6, startFrom)
+        );
+
+        if (albumsSnapshots.empty) {
+            dispatch(setNoMoreAlbums(true));
+        } else {
+            albumsSnapshots.forEach(album => {
+                dispatch(setStartedFrom(album.data()));
+                ab.push(album.data() as AlbumInterface);
+            });
+        }
+
+        return ab;
+    };
+
+    const setAlbumsBannerImage = async (albums: AlbumInterface[]): Promise<AlbumInterface[]> => {
+        const storage = getStorage();
+
+        const promises: Promise<string>[] = albums.map((album: AlbumInterface) =>
+            getDownloadURL(ref(storage, `${album.banner}`))
+        );
+
+        const results = await Promise.allSettled(promises);
+
+        results.forEach((promiseUrl: PromiseSettledResult<string>, index: number) => {
+            if (promiseUrl.status !== "fulfilled") return;
+            albums[index].banner = promiseUrl.value;
+        });
+
+        return albums;
+    };
 
     return (
         <PageLayout>
-            <Head>
-                <title>Webstout Blog - Photo Albums</title>
-                <meta name="Home" content="Homescreen of blog" />
-                <link rel="icon" href="/logo.svg" />
-            </Head>
-
             <main className={styles["main"]}>
+                <Head>
+                    <title>Webstout Blog - Photo Albums</title>
+                    <meta name="Home" content="Homescreen of blog" />
+                    <link rel="icon" href="/logo.svg" />
+                </Head>
                 <header className={styles["main-header"]}>
                     <h1>Albums</h1>
                     <p>Photos & videos created and shot by me</p>
@@ -57,20 +88,25 @@ const Albums: NextPage = () => {
 
                 <section className={styles["main-photo-cards"]}>
                     {albums &&
-                        albums.map((album, index) =>
-                            index < 3 ? (
-                                <PhotoCard
-                                    key={index}
-                                    image={album.banner}
-                                    title={album.title}
-                                    subTitle={album.subtitle}
-                                />
-                            ) : undefined
-                        )}
+                        albums.map((album, index) => (
+                            <PhotoCard
+                                key={index}
+                                image={album.banner}
+                                title={album.title}
+                                subTitle={album.subtitle}
+                            />
+                        ))}
                 </section>
 
-                {albums && albums.length > 3 && (
-                    <Button className={styles["main-button"]}>Load More</Button>
+                {loading && <RollerText text="Loading the albums" />}
+
+                {loading && noMoreAlbums && albums && albums.length > 3 && (
+                    <Button
+                        className={styles["main-button"]}
+                        onClick={() => getAlbums(false)}
+                        disabled={loading || noMoreAlbums}>
+                        Load More
+                    </Button>
                 )}
             </main>
         </PageLayout>

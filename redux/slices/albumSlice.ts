@@ -1,4 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { DocumentData, QueryDocumentSnapshot } from "firebase/firestore";
+
+export interface AlbumsInterface {
+    loading: boolean;
+    albums: AlbumInterface[];
+    startFrom?: DocumentData;
+    noMoreAlbums: boolean;
+}
 
 export interface AlbumInterface {
     title: string;
@@ -9,34 +17,36 @@ export interface AlbumInterface {
     banner: string;
 }
 
-const initialState: AlbumInterface = {
-    title: "",
-    subtitle: "",
-    startDate: "",
-    endDate: "",
-    image: [],
-    banner: "",
+const initialState: AlbumsInterface = {
+    loading: false,
+    albums: [],
+    noMoreAlbums: false,
 };
 
-export const albumSlice = createSlice({
-    name: "album-slice",
-    initialState: [],
+export const albumsSlice = createSlice({
+    name: "albums-slice",
+    initialState: initialState,
     reducers: {
-        setAlbumsWithoutImages: (state, action: PayloadAction<AlbumInterface[]>) => {},
-        // setAllButImages: (state, action: PayloadAction<AlbumInterface>) => {
-        //     state.title = action.payload.title;
-        //     state.subtitle = action.payload.subtitle;
-        //     state.startDate = action.payload.startDate;
-        //     state.endDate = action.payload.endDate;
-        //     state.banner = action.payload.banner;
-        // },
-        setBanner: (state, action: PayloadAction<AlbumInterface>) => {
-            // state.images = action.payload.images;
+        setLoading: (state, action: PayloadAction<boolean>) => {
+            state.loading = action.payload;
+        },
+        setStartedFrom: (state, action: PayloadAction<DocumentData>) => {
+            state.startFrom = action.payload;
+        },
+        setNoMoreAlbums: (state, action: PayloadAction<boolean>) => {
+            state.noMoreAlbums = action.payload;
+        },
+        addAlbums: (state, action: PayloadAction<AlbumInterface[]>) => {
+            state.albums = [...state.albums, ...action.payload];
+        },
+        addAlbum: (state, action: PayloadAction<AlbumInterface>) => {
+            state.albums = [...state.albums, action.payload];
         },
     },
 });
 
 // Action creators are generated for each case reducer function
-export const {} = albumSlice.actions;
+export const { setLoading, setStartedFrom, setNoMoreAlbums, addAlbums, addAlbum } =
+    albumsSlice.actions;
 
-export default albumSlice.reducer;
+export default albumsSlice.reducer;

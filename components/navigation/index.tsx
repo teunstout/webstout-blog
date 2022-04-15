@@ -20,7 +20,7 @@ const navItems: NavItemInterface[] = [
         label: "Home",
     },
     {
-        path: "/album",
+        path: "/albums",
         label: "Albums",
     },
     {
