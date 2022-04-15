@@ -10,7 +10,7 @@ import { PathsEnum } from "../../utils/enums/paths";
 import { AlbumInterface } from "../../redux/slices/albumSlice";
 import { useEffect, useState } from "react";
 
-const Album: NextPage = () => {
+const Albums: NextPage = () => {
     const database = getDatabase();
     const storage = getStorage();
     const databaseRef = refDatabase(database, `/${PathsEnum.album}`);
@@ -57,14 +57,16 @@ const Album: NextPage = () => {
 
                 <section className={styles["main-photo-cards"]}>
                     {albums &&
-                        albums.map((album, index) => (
-                            <PhotoCard
-                                key={index}
-                                image={album.banner}
-                                title={album.title}
-                                subTitle={album.subtitle}
-                            />
-                        ))}
+                        albums.map((album, index) =>
+                            index < 3 ? (
+                                <PhotoCard
+                                    key={index}
+                                    image={album.banner}
+                                    title={album.title}
+                                    subTitle={album.subtitle}
+                                />
+                            ) : undefined
+                        )}
                 </section>
 
                 {albums && albums.length > 3 && (
@@ -75,4 +77,4 @@ const Album: NextPage = () => {
     );
 };
 
-export default Album;
+export default Albums;
