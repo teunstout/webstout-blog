@@ -28,6 +28,7 @@ const FormPhotos = ({ form, setShowPhotos }: FormPhotosInterface) => {
         setLoading(true);
         await uploadAlbum(form);
         dispatch(resetUploadFormState());
+        setLoading(false);
         window.location.href = PathsEnum.album;
     };
 

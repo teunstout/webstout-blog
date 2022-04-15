@@ -1,8 +1,9 @@
-import { FirebaseStorage, getStorage, ref as refStorage, uploadBytes } from "firebase/storage";
-import { getDatabase, ref as refDatabase, set } from "firebase/database";
+import { FirebaseStorage, getStorage, ref, uploadBytes } from "firebase/storage";
+import { getFirestore, addDoc, collection } from "firebase/firestore";
 import { ImageInterface, UploadFormInterface } from "../../redux/slices/formSlice";
 import { PathsEnum } from "../enums/paths";
 import dateToLocalDate from "./dateToLocalDate";
+import { FirebaseEnum } from "../enums/firebase";
 
 export interface UploadAlbumInterface extends AlbumImageInterface {
     title: string;
@@ -43,13 +44,17 @@ const resultsUploadPromises = async ({
 }: UploadPromisesInterface): Promise<AlbumImageInterface> => {
     let banner: string = "";
     const promRes = await Promise.allSettled(promises);
+
     const filtPromRes = promRes.filter((result, index) => {
         const fulfilled: boolean = result.status === "fulfilled";
         if (index === bannerIndex && fulfilled)
             banner = (result as PromiseFulfilledResult<string>).value;
         return fulfilled;
     });
+
     const results = filtPromRes.map(filtRes => (filtRes as PromiseFulfilledResult<string>).value);
+
+    console.info("!--Photo's uploaded--!");
 
     return { images: results, banner };
 };
@@ -88,10 +93,7 @@ const uploadPhoto = async (
     title: string,
     storage: FirebaseStorage
 ): Promise<string> => {
-    const storageRef = refStorage(
-        storage,
-        `${PathsEnum.album}/${title}/${photo.filename.toLowerCase()}`
-    );
+    const storageRef = ref(storage, `${PathsEnum.album}/${title}/${photo.filename.toLowerCase()}`);
 
     //  TODO: Check if there is a better way to create blobs
     // https://stackoverflow.com/questions/11876175/how-to-get-a-file-or-blob-from-an-object-url
@@ -108,20 +110,25 @@ const uploadPhoto = async (
  * @param form
  */
 const uploadAlbum = async (form: UploadFormInterface) => {
-    const database = getDatabase();
+    const firestore = getFirestore();
     const { banner, images } = await uploadPhotos(form);
 
-    await set(refDatabase(database, `${PathsEnum.album}/${form.title}`), {
-        title: form.title,
-        subtitle: form.subtitle,
-        startDate: form.startDate,
-        endDate: form.endDate,
-        images: images,
-        banner: banner,
-        createdAt: dateToLocalDate(new Date(Date.now())),
-    });
+    console.log(images);
 
-    console.info("!--Photo's uploaded--!");
+    try {
+        await addDoc(collection(firestore, FirebaseEnum.albums), {
+            title: form.title,
+            subtitle: form.subtitle,
+            startDate: form.startDate,
+            endDate: form.endDate,
+            images: images,
+            banner: banner,
+            createdAt: dateToLocalDate(new Date(Date.now())),
+        });
+        console.info("!--Album uploaded--!");
+    } catch (e) {
+        console.error(e);
+    }
 };
 
 export default uploadAlbum;
