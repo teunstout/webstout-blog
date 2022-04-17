@@ -5,6 +5,7 @@
     "scripts": {
         "dev": "next dev",
         "build": "next build",
+        "build-firebase": "next build && next export",
         "start": "next start",
         "lint": "next lint",
         "prettier": "prettier --write ."
@@ -24,7 +25,7 @@
     "devDependencies": {
         "@types/lodash": "^4.14.181",
         "@types/node": "17.0.21",
-        "@types/react": "17.0.40",
+        "@types/react": "18.0.1",
         "eslint": "8.10.0",
         "eslint-config-next": "12.1.0",
         "prettier": "2.6.2",
