@@ -6,6 +6,7 @@ export enum IconEnum {
     instagram = "instagram",
     github = "github",
     arrowLeft = "arrow-left",
+    linkedIn = "linkedIn",
 }
 
 interface IconInterface {
@@ -27,6 +28,8 @@ const Icon = ({ icon, height, width, className, hover }: IconInterface) => {
                 return "/img/github.png";
             case IconEnum.arrowLeft:
                 return "/img/arrow-left.png";
+            case IconEnum.linkedIn:
+                return "/icon/linkedin.svg";
             default:
                 return "";
         }

@@ -7,10 +7,12 @@ import { useSelector } from "react-redux";
 import { StoreState } from "../../redux/store";
 import Form from "../../components/form";
 import FormPhotos from "../../components/form-photos";
+import Button from "../../components/elements/button";
 
 const Upload: NextPage = () => {
     const [showPhotos, setShowPhotos] = useState<boolean>(false);
     const form = useSelector((state: StoreState) => state.uploadForm);
+    const { admin } = useSelector((state: StoreState) => state.user);
 
     return (
         <PageLayout
@@ -23,8 +25,9 @@ const Upload: NextPage = () => {
             </Head>
 
             <main className={styles["main"]}>
-                {showPhotos && <FormPhotos form={form} setShowPhotos={setShowPhotos} />}
-                {!showPhotos && <Form form={form} nextStep={() => setShowPhotos(true)} />}
+                {!admin && <Button href="/">Homepage</Button>}
+                {admin && showPhotos && <FormPhotos form={form} setShowPhotos={setShowPhotos} />}
+                {admin && !showPhotos && <Form form={form} nextStep={() => setShowPhotos(true)} />}
             </main>
         </PageLayout>
     );
