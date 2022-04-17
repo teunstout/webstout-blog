@@ -2,7 +2,7 @@
 const nextConfig = {
     reactStrictMode: false, // 2 rerenders if true
     images: {
-        domains: ["firebasestorage.googleapis.com", "vitals.vercel-insights.com"],
+        domains: ["firebasestorage.googleapis.com"],
     },
 };
 
