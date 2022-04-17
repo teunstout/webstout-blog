@@ -24,6 +24,13 @@
     padding: 0 2rem;
 }
 
+.main-buttons {
+    display: flex;
+    gap: 1rem;
+    margin: 0 auto;
+}
+
 .main-button {
     margin: 0 auto;
+    min-width: 10rem;
 }

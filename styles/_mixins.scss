@@ -1,0 +1,20 @@
+@use "styles/variables" as var;
+
+@mixin offsetOrange {
+    cursor: pointer;
+    transition: 0.25s;
+
+    &:hover {
+        box-shadow: 0 0.5em 0.5em -0.4em var.$on-secondary;
+        color: var.$on-secondary;
+        border-color: var.$on-secondary;
+        transform: translateY(-0.25em);
+
+        svg path {
+            fill: var.$on-secondary;
+        }
+    }
+    svg path {
+        fill: var.$on-secondary;
+    }
+}
