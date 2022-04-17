@@ -6,7 +6,7 @@ interface AuthenticationInterface {
     children: React.ReactChild;
 }
 
-const Authentication = ({ children }: AuthenticationInterface) => {
+const Authentication = ({ children }: AuthenticationInterface): JSX.Element => {
     const dispatch = useDispatch();
 
     const auth = getAuth();
@@ -17,7 +17,7 @@ const Authentication = ({ children }: AuthenticationInterface) => {
             dispatch(removeUser());
         }
     });
-    return children;
+    return <>{children}</>;
 };
 
 export default Authentication;
