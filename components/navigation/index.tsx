@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { useSelector } from "react-redux";
+import { StoreState } from "../../redux/store";
 import Button from "../elements/button";
 import Icon, { IconEnum } from "../elements/icon";
 import IconDynamic from "../elements/icon/dynamic";
@@ -38,9 +40,14 @@ const iconItems: IconItemInterface[] = [
         url: "https://github.com/teunstout",
         icon: IconEnum.github,
     },
+    {
+        url: "https://www.linkedin.com/in/teun-stout-78399b187/",
+        icon: IconEnum.linkedIn,
+    },
 ];
 
 const Navigation = () => {
+    const { admin } = useSelector((state: StoreState) => state.user);
     // TODO: Fucks mobile
     return (
         <nav className={styles["navigation-main"]}>
@@ -74,7 +81,7 @@ const Navigation = () => {
                 </ul>
             </div>
             {/* TODO: When admin show button */}
-            {true && (
+            {admin && (
                 <Button className={styles["upload-button"]} href="/upload">
                     Upload
                 </Button>

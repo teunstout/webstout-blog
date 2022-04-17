@@ -1,7 +1,7 @@
 export const dateToLocalDate = (date: Date): string =>
     date.toLocaleDateString("nl-NL", {
         year: "numeric",
-        month: "long",
+        month: "numeric",
         day: "numeric",
         hour: "2-digit",
         minute: "2-digit",
