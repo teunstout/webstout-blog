@@ -1,91 +1,21 @@
 import Link from "next/link";
-import { useSelector } from "react-redux";
-import { StoreState } from "../../redux/store";
-import Button from "../elements/button";
 import Icon, { IconEnum } from "../elements/icon";
 import IconDynamic from "../elements/icon/dynamic";
+import IconList from "./icon-list";
 import styles from "./Index.module.scss";
-
-interface NavItemInterface {
-    path: string;
-    label: string;
-}
-
-interface IconItemInterface {
-    url: string;
-    icon: IconEnum;
-}
-
-const navItems: NavItemInterface[] = [
-    {
-        path: "/",
-        label: "Home",
-    },
-    {
-        path: "/albums",
-        label: "Albums",
-    },
-    {
-        path: "/blog",
-        label: "Blog",
-    },
-];
-
-const iconItems: IconItemInterface[] = [
-    {
-        url: "https://www.instagram.com/teun_stout",
-        icon: IconEnum.instagram,
-    },
-    {
-        url: "https://github.com/teunstout",
-        icon: IconEnum.github,
-    },
-    {
-        url: "https://www.linkedin.com/in/teun-stout-78399b187/",
-        icon: IconEnum.linkedIn,
-    },
-];
+import TextList from "./text-list";
 
 const Navigation = () => {
-    const { admin } = useSelector((state: StoreState) => state.user);
-    // TODO: Fucks mobile
     return (
-        <nav className={styles["navigation-main"]}>
+        <nav className={styles["main-nav"]}>
             <Link href="/" passHref>
-                <a className={styles["navigation-main-link"]}>
-                    <IconDynamic className={styles["image"]} icon={IconEnum.logo} />
+                <a className={styles["main-nav-link"]}>
+                    <IconDynamic icon={IconEnum.logo} />
                 </a>
             </Link>
 
-            <div className={styles["lists"]}>
-                <ul className={styles["list-nav"]}>
-                    {navItems.map(({ path, label }, index) => (
-                        <li key={index} className={styles["nav-item"]}>
-                            <Link href={path} passHref>
-                                <a>{label}</a>
-                            </Link>
-                        </li>
-                    ))}
-                </ul>
-
-                <ul className={styles["list-icon"]}>
-                    {iconItems.map(({ url, icon }, index) => (
-                        <li key={index} className={styles["icon-item"]}>
-                            <Link href={url} passHref>
-                                <a target="_blank">
-                                    <Icon icon={icon} height={24} width={24} hover />
-                                </a>
-                            </Link>
-                        </li>
-                    ))}
-                </ul>
-            </div>
-            {/* TODO: When admin show button */}
-            {admin && (
-                <Button className={styles["upload-button"]} href="/upload">
-                    Upload
-                </Button>
-            )}
+            <TextList />
+            <IconList />
         </nav>
     );
 };

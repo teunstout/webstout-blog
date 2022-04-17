@@ -24,6 +24,7 @@ const Albums: NextPage = () => {
     const { loading, albums, startFrom, noMoreAlbums } = useSelector(
         (state: StoreState) => state.albums
     );
+    const { admin } = useSelector((state: StoreState) => state.user);
 
     useEffect(() => {
         getAlbums(true);
@@ -81,6 +82,7 @@ const Albums: NextPage = () => {
                     <meta name="Home" content="Homescreen of blog" />
                     <link rel="icon" href="/logo.svg" />
                 </Head>
+
                 <header className={styles["main-header"]}>
                     <h1>Albums</h1>
                     <p>Photos & videos created and shot by me</p>
@@ -100,14 +102,22 @@ const Albums: NextPage = () => {
 
                 {loading && <RollerText text="Loading the albums" />}
 
-                {loading && noMoreAlbums && albums && albums.length > 3 && (
-                    <Button
-                        className={styles["main-button"]}
-                        onClick={() => getAlbums(false)}
-                        disabled={loading || noMoreAlbums}>
-                        Load More
-                    </Button>
-                )}
+                <section className={styles["main-buttons"]}>
+                    {admin && (
+                        <Button className={styles["main-button"]} href="/upload">
+                            Upload
+                        </Button>
+                    )}
+
+                    {loading && noMoreAlbums && albums && albums.length > 3 && (
+                        <Button
+                            className={styles["main-button"]}
+                            onClick={() => getAlbums(false)}
+                            disabled={loading || noMoreAlbums}>
+                            Load More
+                        </Button>
+                    )}
+                </section>
             </main>
         </PageLayout>
     );
