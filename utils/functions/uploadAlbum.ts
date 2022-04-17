@@ -113,8 +113,6 @@ const uploadAlbum = async (form: UploadFormInterface) => {
     const firestore = getFirestore();
     const { banner, images } = await uploadPhotos(form);
 
-    console.log(images);
-
     try {
         await addDoc(collection(firestore, FirebaseEnum.albums), {
             title: form.title,

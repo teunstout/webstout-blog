@@ -9,8 +9,6 @@ import Authentication from "../components/elements/auth";
 
 function MyApp({ Component, pageProps }: AppProps) {
     initializeApp(clientCredentials);
-    console.log(clientCredentials);
-    
 
     return (
         <Provider store={store}>
