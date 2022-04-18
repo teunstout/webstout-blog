@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Icon, { IconEnum } from "../elements/icon";
+import { IconEnum } from "../elements/icon";
 import IconDynamic from "../elements/icon/dynamic";
 import IconList from "./icon-list";
 import styles from "./Index.module.scss";
