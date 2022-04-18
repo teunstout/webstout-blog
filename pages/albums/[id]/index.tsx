@@ -83,8 +83,9 @@ const Album: NextPage = () => {
      * @returns Complete Album
      */
     const setAlbumImgUrls = async (albumIndex: number): Promise<AlbumInterface> => {
-        const a: AlbumInterface = albums[albumIndex];
-        const urls = await getImageUrls(album.images);
+        const a: AlbumInterface = { ...albums[albumIndex] };
+
+        const urls = await getImageUrls(a.images);
         a.images = a.images.map((img, index) => (img = urls[index]));
 
         return a;
