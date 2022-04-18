@@ -13,11 +13,12 @@ import {
 } from "../../redux/slices/albumSlice";
 import { useEffect } from "react";
 import { getFirestore, getDocs } from "firebase/firestore";
-import { getDownloadURL, getStorage, ref } from "firebase/storage";
 import RollerText from "../../components/roller-text";
 import { useDispatch, useSelector } from "react-redux";
 import { StoreState } from "../../redux/store";
-import { getAlbumsPagination } from "../../utils/firebase/querys";
+import Link from "next/link";
+import { getAlbumsQuery } from "../../utils/firebase/querys/getAlbumsQuery";
+import getImageUrls from "../../utils/firebase/functions/getImageUrls";
 
 const Albums: NextPage = () => {
     const dispatch = useDispatch();
@@ -27,62 +28,79 @@ const Albums: NextPage = () => {
     const { admin } = useSelector((state: StoreState) => state.user);
 
     useEffect(() => {
-        getAlbums(true);
+        getAlbums(!!startFrom);
+
+        // Return setLoading so that we won't end up in a infinite loop
+        return () => {
+            setLoading(false);
+        };
     }, []);
 
+    /**
+     * Get the albums and set the albums banner to a full url
+     *
+     * @param initial first time getting the albums
+     * @returns void
+     */
     const getAlbums = async (initial: boolean) => {
         if (noMoreAlbums || loading) return;
         dispatch(setLoading(true));
-        dispatch(addAlbums(await setAlbumsBannerImage(await getAlbumsStartAt(initial))));
+        dispatch(addAlbums(await getAlbumsBanner(await getAlbumsStartAt(initial))));
         dispatch(setLoading(false));
     };
 
+    /**
+     * Takes the albums without banners and return them with banners
+     *
+     * @param albums Albums without full banners
+     * @returns Albums with full banners
+     */
+    const getAlbumsBanner = async (albums: AlbumInterface[]): Promise<AlbumInterface[]> => {
+        const banners: string[] = await getImageUrls(albums.map(album => album.banner));
+        albums.map((album, index) => (album.banner = banners[index]));
+        return albums;
+    };
+
+    /**
+     * Get the albums starting from a position.
+     * Makes use of a query to enforce getting a few albums at the time.
+     * Adds the document ids to albums so we can distinct them
+     *
+     * @param initial First time getting albums
+     * @returns
+     */
     const getAlbumsStartAt = async (initial: boolean): Promise<AlbumInterface[]> => {
         const firestore = getFirestore();
         const ab: AlbumInterface[] = [];
 
         const albumsSnapshots = await getDocs(
-            getAlbumsPagination(firestore, initial ? 3 : 6, startFrom)
+            getAlbumsQuery(firestore, initial ? 3 : 6, startFrom)
         );
 
         if (albumsSnapshots.empty) {
             dispatch(setNoMoreAlbums(true));
         } else {
             albumsSnapshots.forEach(album => {
-                dispatch(setStartedFrom(album.data()));
-                ab.push(album.data() as AlbumInterface);
+                dispatch(setStartedFrom(album.data() as AlbumInterface));
+                ab.push({
+                    ...(album.data() as AlbumInterface),
+                    id: album.id,
+                });
             });
         }
 
         return ab;
     };
 
-    const setAlbumsBannerImage = async (albums: AlbumInterface[]): Promise<AlbumInterface[]> => {
-        const storage = getStorage();
-
-        const promises: Promise<string>[] = albums.map((album: AlbumInterface) =>
-            getDownloadURL(ref(storage, `${album.banner}`))
-        );
-
-        const results = await Promise.allSettled(promises);
-
-        results.forEach((promiseUrl: PromiseSettledResult<string>, index: number) => {
-            if (promiseUrl.status !== "fulfilled") return;
-            albums[index].banner = promiseUrl.value;
-        });
-
-        return albums;
-    };
-
     return (
         <PageLayout>
-            <main className={styles["main"]}>
-                <Head>
-                    <title>Webstout Blog - Photo Albums</title>
-                    <meta name="Home" content="Homescreen of blog" />
-                    <link rel="icon" href="/logo.svg" />
-                </Head>
+            <Head>
+                <title>Webstout Blog - Photo Albums</title>
+                <meta name="Albums" content="All albums on this website" />
+                <link rel="icon" href="/logo.svg" />
+            </Head>
 
+            <main className={styles["main"]}>
                 <header className={styles["main-header"]}>
                     <h1>Albums</h1>
                     <p>Photos & videos created and shot by me</p>
@@ -91,12 +109,15 @@ const Albums: NextPage = () => {
                 <section className={styles["main-photo-cards"]}>
                     {albums &&
                         albums.map((album, index) => (
-                            <PhotoCard
-                                key={index}
-                                image={album.banner}
-                                title={album.title}
-                                subTitle={album.subtitle}
-                            />
+                            <Link key={index} href={`/albums/${album.id}`} passHref>
+                                <a>
+                                    <PhotoCard
+                                        image={album.banner}
+                                        title={album.title}
+                                        subTitle={album.subtitle}
+                                    />
+                                </a>
+                            </Link>
                         ))}
                 </section>
 

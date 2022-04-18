@@ -2,18 +2,17 @@
 
 $max-column-count: 3;
 .photo-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit);
-    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
     gap: 1rem;
-    padding: 0 1rem;
+    justify-content: center;
 }
 
 .photo-wrapper {
     position: relative;
     transition: 0.25s;
-    height: 18rem;
-    width: 18rem;
+    height: 20rem;
+    width: 100%;
     transition: 0.2s;
 }
 
@@ -30,13 +29,8 @@ $max-column-count: 3;
 }
 
 @media (min-width: var.$small-screen) {
-    .photo-gird {
-        grid-auto-flow: column;
-    }
-
-    @for $i from 1 through $max-column-count {
-        .photo-wrapper:nth-child(#{$max-column-count}n + #{$i}) {
-            grid-column: $i;
-        }
+    .photo-wrapper {
+        height: 20rem;
+        width: 20rem;
     }
 }

@@ -9,6 +9,7 @@ export interface AlbumsInterface {
 }
 
 export interface AlbumInterface {
+    id: string;
     title: string;
     subtitle: string;
     startDate: string;

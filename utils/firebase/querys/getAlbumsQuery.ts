@@ -8,7 +8,7 @@ import {
     startAfter,
 } from "firebase/firestore";
 
-export const getAlbumsPagination = (firestore: Firestore, lim: number, start?: DocumentData) =>
+export const getAlbumsQuery = (firestore: Firestore, lim: number, start?: DocumentData) =>
     start
         ? query(
               collection(firestore, "albums"),

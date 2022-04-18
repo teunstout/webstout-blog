@@ -11,6 +11,7 @@ const Blog: NextPage = () => {
                 <meta name="Home" content="Homescreen of blog" />
                 <link rel="icon" href="/logo.svg" />
             </Head>
+            
             <main className={styles["main"]}></main>
         </PageLayout>
     );
