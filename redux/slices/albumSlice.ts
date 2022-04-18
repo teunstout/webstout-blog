@@ -1,12 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { DocumentData, QueryDocumentSnapshot } from "firebase/firestore";
 
-export interface AlbumsInterface {
-    loading: boolean;
-    albums: AlbumInterface[];
-    startFrom?: DocumentData;
-    noMoreAlbums: boolean;
-}
+const initialState: AlbumInterface = {
+    id: "",
+    title: "",
+    subtitle: "",
+    startDate: "",
+    endDate: "",
+    images: [],
+    banner: "",
+};
 
 export interface AlbumInterface {
     id: string;
@@ -14,40 +16,27 @@ export interface AlbumInterface {
     subtitle: string;
     startDate: string;
     endDate: string;
-    image: string[];
+    images: string[];
     banner: string;
 }
 
-const initialState: AlbumsInterface = {
-    loading: false,
-    albums: [],
-    noMoreAlbums: false,
-};
-
-export const albumsSlice = createSlice({
-    name: "albums-slice",
+export const albumSlice = createSlice({
+    name: "album-slice",
     initialState: initialState,
     reducers: {
-        setLoading: (state, action: PayloadAction<boolean>) => {
-            state.loading = action.payload;
-        },
-        setStartedFrom: (state, action: PayloadAction<DocumentData>) => {
-            state.startFrom = action.payload;
-        },
-        setNoMoreAlbums: (state, action: PayloadAction<boolean>) => {
-            state.noMoreAlbums = action.payload;
-        },
-        addAlbums: (state, action: PayloadAction<AlbumInterface[]>) => {
-            state.albums = [...state.albums, ...action.payload];
-        },
-        addAlbum: (state, action: PayloadAction<AlbumInterface>) => {
-            state.albums = [...state.albums, action.payload];
+        setAlbum: (state, action: PayloadAction<AlbumInterface>) => {
+            state.id = action.payload.id;
+            state.title = action.payload.title;
+            state.subtitle = action.payload.subtitle;
+            state.startDate = action.payload.startDate;
+            state.endDate = action.payload.endDate;
+            state.images = action.payload.images;
+            state.banner = action.payload.banner;
         },
     },
 });
 
 // Action creators are generated for each case reducer function
-export const { setLoading, setStartedFrom, setNoMoreAlbums, addAlbums, addAlbum } =
-    albumsSlice.actions;
+export const { setAlbum } = albumSlice.actions;
 
-export default albumsSlice.reducer;
+export default albumSlice.reducer;

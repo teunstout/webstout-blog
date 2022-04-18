@@ -7,10 +7,9 @@ import styles from "./Index.module.scss";
 import {
     addAlbums,
     setStartedFrom,
-    AlbumInterface,
     setLoading,
     setNoMoreAlbums,
-} from "../../redux/slices/albumSlice";
+} from "../../redux/slices/albumsSlice";
 import { useEffect } from "react";
 import { getFirestore, getDocs } from "firebase/firestore";
 import RollerText from "../../components/roller-text";
@@ -19,10 +18,11 @@ import { StoreState } from "../../redux/store";
 import Link from "next/link";
 import { getAlbumsQuery } from "../../utils/firebase/querys/getAlbumsQuery";
 import getImageUrls from "../../utils/firebase/functions/getImageUrls";
+import { AlbumInterface } from "../../redux/slices/albumSlice";
 
 const Albums: NextPage = () => {
     const dispatch = useDispatch();
-    const { loading, albums, startFrom, noMoreAlbums } = useSelector(
+    const { loading, data, startFrom, noMoreAlbums } = useSelector(
         (state: StoreState) => state.albums
     );
     const { admin } = useSelector((state: StoreState) => state.user);
@@ -32,7 +32,7 @@ const Albums: NextPage = () => {
 
         // Return setLoading so that we won't end up in a infinite loop
         return () => {
-            setLoading(false);
+            dispatch(setLoading(false));
         };
     }, []);
 
@@ -107,8 +107,8 @@ const Albums: NextPage = () => {
                 </header>
 
                 <section className={styles["main-photo-cards"]}>
-                    {albums &&
-                        albums.map((album, index) => (
+                    {data &&
+                        data.map((album, index) => (
                             <Link key={index} href={`/albums/${album.id}`} passHref>
                                 <a>
                                     <PhotoCard
@@ -130,7 +130,7 @@ const Albums: NextPage = () => {
                         </Button>
                     )}
 
-                    {loading && noMoreAlbums && albums && albums.length > 3 && (
+                    {loading && noMoreAlbums && data && data.length > 3 && (
                         <Button
                             className={styles["main-button"]}
                             onClick={() => getAlbums(false)}
