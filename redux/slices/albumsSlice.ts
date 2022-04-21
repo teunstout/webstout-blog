@@ -1,18 +1,17 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { DocumentData } from "firebase/firestore";
 import { AlbumInterface } from "./albumSlice";
 
 export interface AlbumsInterface {
     loading: boolean;
     data: AlbumInterface[];
-    startFrom?: DocumentData;
-    noMoreAlbums: boolean;
+    lastAlbum?: string;
+    moreAlbums: boolean;
 }
 
 const initialState: AlbumsInterface = {
     loading: false,
     data: [],
-    noMoreAlbums: false,
+    moreAlbums: true,
 };
 
 export const albumsSlice = createSlice({
@@ -22,11 +21,11 @@ export const albumsSlice = createSlice({
         setLoading: (state, action: PayloadAction<boolean>) => {
             state.loading = action.payload;
         },
-        setStartedFrom: (state, action: PayloadAction<DocumentData>) => {
-            state.startFrom = action.payload;
+        setLastAlbum: (state, action: PayloadAction<string>) => {
+            state.lastAlbum = action.payload;
         },
-        setNoMoreAlbums: (state, action: PayloadAction<boolean>) => {
-            state.noMoreAlbums = action.payload;
+        setMoreAlbums: (state, action: PayloadAction<boolean>) => {
+            state.moreAlbums = action.payload;
         },
         addAlbums: (state, action: PayloadAction<AlbumInterface[]>) => {
             state.data = [...state.data, ...action.payload];
@@ -44,7 +43,6 @@ export const albumsSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { setLoading, setStartedFrom, setNoMoreAlbums, addAlbums, addAlbum } =
-    albumsSlice.actions;
+export const { setLoading, setLastAlbum, setMoreAlbums, addAlbums, addAlbum } = albumsSlice.actions;
 
 export default albumsSlice.reducer;

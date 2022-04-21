@@ -1,15 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-const initialState: AlbumInterface = {
-    id: "",
-    title: "",
-    subtitle: "",
-    startDate: "",
-    endDate: "",
-    images: [],
-    banner: "",
-};
-
 export interface AlbumInterface {
     id: string;
     title: string;
@@ -18,7 +8,19 @@ export interface AlbumInterface {
     endDate: string;
     images: string[];
     banner: string;
+    createdAt: string;
 }
+
+const initialState: AlbumInterface = {
+    id: "",
+    title: "",
+    subtitle: "",
+    startDate: "",
+    endDate: "",
+    images: [],
+    banner: "",
+    createdAt: "",
+};
 
 export const albumSlice = createSlice({
     name: "album-slice",
@@ -32,6 +34,7 @@ export const albumSlice = createSlice({
             state.endDate = action.payload.endDate;
             state.images = action.payload.images;
             state.banner = action.payload.banner;
+            state.createdAt = action.payload.createdAt;
         },
     },
 });

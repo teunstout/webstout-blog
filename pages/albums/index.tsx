@@ -4,13 +4,8 @@ import Button from "../../components/elements/button";
 import PageLayout from "../../components/page-layout";
 import PhotoCard from "../../components/photo-card";
 import styles from "./Index.module.scss";
-import {
-    addAlbums,
-    setStartedFrom,
-    setLoading,
-    setNoMoreAlbums,
-} from "../../redux/slices/albumsSlice";
-import { useEffect } from "react";
+import { addAlbums, setLastAlbum, setLoading, setMoreAlbums } from "../../redux/slices/albumsSlice";
+import { useEffect, useState } from "react";
 import { getFirestore, getDocs } from "firebase/firestore";
 import RollerText from "../../components/roller-text";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,12 +17,12 @@ import { AlbumInterface } from "../../redux/slices/albumSlice";
 const Albums: NextPage = () => {
     const dispatch = useDispatch();
     const { admin } = useSelector((state: StoreState) => state.user);
-    const { loading, data, startFrom, noMoreAlbums } = useSelector(
+    const { loading, data, lastAlbum, moreAlbums } = useSelector(
         (state: StoreState) => state.albums
     );
 
     useEffect(() => {
-        getAlbums(!!startFrom);
+        getAlbums();
 
         // Return setLoading so that we won't end up in a infinite loop
         return () => {
@@ -41,10 +36,10 @@ const Albums: NextPage = () => {
      * @param initial first time getting the albums
      * @returns void
      */
-    const getAlbums = async (initial: boolean) => {
-        if (noMoreAlbums || loading) return;
+    const getAlbums = async () => {
+        if (!moreAlbums || loading) return;
         dispatch(setLoading(true));
-        dispatch(addAlbums(await getAlbumsStartAt(initial)));
+        dispatch(addAlbums(await getAlbumsStartAt()));
         dispatch(setLoading(false));
     };
 
@@ -56,25 +51,22 @@ const Albums: NextPage = () => {
      * @param initial First time getting albums
      * @returns
      */
-    const getAlbumsStartAt = async (initial: boolean): Promise<AlbumInterface[]> => {
-        const firestore = getFirestore();
+    const getAlbumsStartAt = async (): Promise<AlbumInterface[]> => {
         const ab: AlbumInterface[] = [];
+        const albumsSnapshots = await getDocs(getAlbumsQuery(getFirestore(), 3, lastAlbum));
+        dispatch(setMoreAlbums(!albumsSnapshots.empty));
 
-        const albumsSnapshots = await getDocs(
-            getAlbumsQuery(firestore, initial ? 3 : 6, startFrom)
-        );
-
-        if (albumsSnapshots.empty) {
-            dispatch(setNoMoreAlbums(true));
-        } else {
+        if (!albumsSnapshots.empty) {
             albumsSnapshots.forEach(album => {
-                dispatch(setStartedFrom(album.data() as AlbumInterface));
+                dispatch(setLastAlbum((album.data() as AlbumInterface).createdAt));
                 ab.push({
                     ...(album.data() as AlbumInterface),
                     id: album.id,
                 });
             });
         }
+
+        console.log(ab);
 
         return ab;
     };
@@ -110,22 +102,24 @@ const Albums: NextPage = () => {
 
                 {loading && <RollerText text="Loading the albums" />}
 
-                <section className={styles["main-buttons"]}>
-                    {admin && (
-                        <Button className={styles["main-button"]} href="/upload">
-                            Upload
-                        </Button>
-                    )}
+                {!loading && (
+                    <section className={styles["main-buttons"]}>
+                        {moreAlbums && (
+                            <Button
+                                className={styles["main-button"]}
+                                onClick={getAlbums}
+                                disabled={loading || !moreAlbums}>
+                                Load More
+                            </Button>
+                        )}
 
-                    {loading && noMoreAlbums && data && data.length > 3 && (
-                        <Button
-                            className={styles["main-button"]}
-                            onClick={() => getAlbums(false)}
-                            disabled={loading || noMoreAlbums}>
-                            Load More
-                        </Button>
-                    )}
-                </section>
+                        {admin && (
+                            <Button className={styles["main-button"]} href="/upload">
+                                Upload
+                            </Button>
+                        )}
+                    </section>
+                )}
             </main>
         </PageLayout>
     );

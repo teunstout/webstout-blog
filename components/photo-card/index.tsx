@@ -10,9 +10,7 @@ interface PhotoCardInterface {
 const PhotoCard = ({ image, title, subTitle }: PhotoCardInterface) => {
     return (
         <article className={styles["photo-card"]}>
-            <div className={styles["photo-wrapper"]}>
-                <Image alt={title} src={image} layout="fill" objectFit="cover" />
-            </div>
+            <Image alt={title} src={image} height={1080} width={1920} objectFit="cover" />
 
             <h2>{title}</h2>
             <p>{subTitle}</p>

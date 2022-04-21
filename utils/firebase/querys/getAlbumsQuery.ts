@@ -9,12 +9,16 @@ import {
 } from "firebase/firestore";
 import { FirebaseEnum } from "../../enums/firebase";
 
-export const getAlbumsQuery = (firestore: Firestore, lim: number, start?: DocumentData) =>
+export const getAlbumsQuery = (firestore: Firestore, lim: number, start?: string) =>
     start
         ? query(
               collection(firestore, FirebaseEnum.albums),
-              orderBy("createdAt"),
+              orderBy("createdAt", "desc"),
               startAfter(start),
               limit(lim)
           )
-        : query(collection(firestore, FirebaseEnum.albums), orderBy("createdAt"), limit(lim));
+        : query(
+              collection(firestore, FirebaseEnum.albums),
+              orderBy("createdAt", "desc"),
+              limit(lim)
+          );

@@ -3,16 +3,11 @@
 .photo-card {
     cursor: pointer;
     transition: 0.25s;
+    width: 22rem;
 }
 
 .photo-card:hover {
     transform: translateY(-0.25em);
-}
-
-.photo-wrapper {
-    position: relative;
-    width: 20rem;
-    height: 12rem;
 }
 
 .photo-card > h2 {
