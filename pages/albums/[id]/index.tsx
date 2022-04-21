@@ -9,10 +9,8 @@ import { StoreState } from "../../../redux/store";
 import { useEffect, useState } from "react";
 import RollerText from "../../../components/roller-text";
 import { AlbumInterface, setAlbum } from "../../../redux/slices/albumSlice";
-import getImageUrls from "../../../utils/firebase/functions/getImageUrls";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
 import { FirebaseEnum } from "../../../utils/enums/firebase";
-import getImageUrl from "../../../utils/firebase/functions/getImageUrl";
 
 const Album: NextPage = () => {
     const router = useRouter();
@@ -27,68 +25,34 @@ const Album: NextPage = () => {
     }, [id, albums]);
 
     /**
-     * Check if a album exists and call right function
-     * Also triggers if we are loading
+     * Set album to redux store if exists
      *
      * @returns void
      */
     const checkAndSetAlbum = async () => {
-        if (id === undefined) return;
         setLoading(true);
 
-        const albumIndex = albums.findIndex(a => a.id === id);
-        let a: AlbumInterface | undefined = undefined;
-
-        if (albumIndex === -1) {
-            const docId: string = Array.isArray(id) ? id[0] : id;
-            a = await getAlbum(docId);
-        } else {
-            a = await setAlbumImgUrls(albumIndex);
+        if (id && albums.findIndex(a => a.id === id) !== -1) {
+            await getAlbum(Array.isArray(id) ? id[0] : id).then(res => dispatch(setAlbum(res)));
         }
-
-        console.log(a);
-
-        if (a !== undefined) dispatch(setAlbum(a));
 
         setLoading(false);
     };
 
     /**
      * Searches for document on firebase.
-     * If doc not found returns undefined.
-     * If album exists get the full image url as well
      *
-     * @param docId Document id from url
-     * @returns Album or undefined if not found
+     * @param docId Document id
+     * @returns Album
      */
-    const getAlbum = async (docId: string): Promise<AlbumInterface | undefined> => {
+    const getAlbum = async (docId: string): Promise<AlbumInterface> => {
         const firestore = getFirestore();
         const docSnap = await getDoc(doc(firestore, FirebaseEnum.albums, docId));
 
         // Means doc does no exist in firestore
-        if (!docSnap.exists()) return undefined;
+        if (!docSnap.exists()) throw new Error("No albums found");
 
-        const a: AlbumInterface = docSnap.data() as AlbumInterface;
-        const urls = await getImageUrls(a.images);
-        a.banner = await getImageUrl(a.banner);
-        a.images = a.images.map((img, index) => (img = urls[index]));
-
-        return a;
-    };
-
-    /**
-     * Creates Complete album from existing album
-     *
-     * @param albumIndex Index of the album from array
-     * @returns Complete Album
-     */
-    const setAlbumImgUrls = async (albumIndex: number): Promise<AlbumInterface> => {
-        const a: AlbumInterface = { ...albums[albumIndex] };
-
-        const urls = await getImageUrls(a.images);
-        a.images = a.images.map((img, index) => (img = urls[index]));
-
-        return a;
+        return docSnap.data() as AlbumInterface;
     };
 
     return (

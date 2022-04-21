@@ -4,6 +4,8 @@ import { ImageInterface, UploadFormInterface } from "../../redux/slices/formSlic
 import { PathsEnum } from "../enums/paths";
 import dateToLocalDate from "./dateToLocalDate";
 import { FirebaseEnum } from "../enums/firebase";
+import getImageUrl from "../firebase/functions/getImageUrl";
+import getImageUrls from "../firebase/functions/getImageUrls";
 
 export interface UploadAlbumInterface extends AlbumImageInterface {
     title: string;
@@ -62,6 +64,7 @@ const resultsUploadPromises = async ({
 /**
  * Create all promises and also checks which index is the index of the banner.
  * We do this so we don't upload a photo twice and use extra storage.
+ * 
  * @param form
  * @param storage single instance of firebase storage
  * @returns promises & index of banner
@@ -83,10 +86,11 @@ const createUploadPromises = (
 /**
  * Fetches blob, upload photo to firebase storage.
  * Removes object made from blob to prevent memory leak
+ * 
  * @param photo filename & blob url
  * @param title album title
  * @param storage single instance of firebase storage
- * @returns promise of strings
+ * @returns relative path in firestore
  */
 const uploadPhoto = async (
     photo: ImageInterface,
@@ -94,19 +98,17 @@ const uploadPhoto = async (
     storage: FirebaseStorage
 ): Promise<string> => {
     const storageRef = ref(storage, `${PathsEnum.album}/${title}/${photo.filename.toLowerCase()}`);
-
-    //  TODO: Check if there is a better way to create blobs
-    // https://stackoverflow.com/questions/11876175/how-to-get-a-file-or-blob-from-an-object-url
     const blob = await fetch(photo.url).then(r => r.blob());
-    const fullPath = (await uploadBytes(storageRef, blob)).metadata.fullPath;
+    const fullPath = await uploadBytes(storageRef, blob);
 
     URL.revokeObjectURL(photo.url);
 
-    return fullPath;
+    return fullPath.metadata.fullPath;
 };
 
 /**
- * Upload Album with the banner and full paths.
+ * Upload Album to firebase
+ * 
  * @param form
  */
 const uploadAlbum = async (form: UploadFormInterface) => {
@@ -119,8 +121,8 @@ const uploadAlbum = async (form: UploadFormInterface) => {
             subtitle: form.subtitle,
             startDate: form.startDate,
             endDate: form.endDate,
-            images: images,
-            banner: banner,
+            images: await getImageUrls(images),
+            banner: await getImageUrl(banner),
             createdAt: dateToLocalDate(new Date(Date.now())),
         });
         console.info("!--Album uploaded--!");

@@ -17,15 +17,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { StoreState } from "../../redux/store";
 import Link from "next/link";
 import { getAlbumsQuery } from "../../utils/firebase/querys/getAlbumsQuery";
-import getImageUrls from "../../utils/firebase/functions/getImageUrls";
 import { AlbumInterface } from "../../redux/slices/albumSlice";
 
 const Albums: NextPage = () => {
     const dispatch = useDispatch();
+    const { admin } = useSelector((state: StoreState) => state.user);
     const { loading, data, startFrom, noMoreAlbums } = useSelector(
         (state: StoreState) => state.albums
     );
-    const { admin } = useSelector((state: StoreState) => state.user);
 
     useEffect(() => {
         getAlbums(!!startFrom);
@@ -45,20 +44,8 @@ const Albums: NextPage = () => {
     const getAlbums = async (initial: boolean) => {
         if (noMoreAlbums || loading) return;
         dispatch(setLoading(true));
-        dispatch(addAlbums(await getAlbumsBanner(await getAlbumsStartAt(initial))));
+        dispatch(addAlbums(await getAlbumsStartAt(initial)));
         dispatch(setLoading(false));
-    };
-
-    /**
-     * Takes the albums without banners and return them with banners
-     *
-     * @param albums Albums without full banners
-     * @returns Albums with full banners
-     */
-    const getAlbumsBanner = async (albums: AlbumInterface[]): Promise<AlbumInterface[]> => {
-        const banners: string[] = await getImageUrls(albums.map(album => album.banner));
-        albums.map((album, index) => (album.banner = banners[index]));
-        return albums;
     };
 
     /**
