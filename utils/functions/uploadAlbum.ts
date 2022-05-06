@@ -31,7 +31,7 @@ interface UploadPromisesInterface {
  */
 const uploadPhotos = async (form: UploadFormInterface): Promise<AlbumImageInterface> => {
     const storage = getStorage();
-    return await resultsUploadPromises(createUploadPromises(form, storage));
+    return resultsUploadPromises(createUploadPromises(form, storage));
 };
 
 /**
@@ -64,7 +64,7 @@ const resultsUploadPromises = async ({
 /**
  * Create all promises and also checks which index is the index of the banner.
  * We do this so we don't upload a photo twice and use extra storage.
- * 
+ *
  * @param form
  * @param storage single instance of firebase storage
  * @returns promises & index of banner
@@ -86,7 +86,7 @@ const createUploadPromises = (
 /**
  * Fetches blob, upload photo to firebase storage.
  * Removes object made from blob to prevent memory leak
- * 
+ *
  * @param photo filename & blob url
  * @param title album title
  * @param storage single instance of firebase storage
@@ -108,7 +108,7 @@ const uploadPhoto = async (
 
 /**
  * Upload Album to firebase
- * 
+ *
  * @param form
  */
 const uploadAlbum = async (form: UploadFormInterface) => {

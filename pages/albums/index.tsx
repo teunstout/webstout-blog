@@ -5,7 +5,7 @@ import PageLayout from "../../components/page-layout";
 import PhotoCard from "../../components/photo-card";
 import styles from "./Index.module.scss";
 import { addAlbums, setLastAlbum, setLoading, setMoreAlbums } from "../../redux/slices/albumsSlice";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { getFirestore, getDocs } from "firebase/firestore";
 import RollerText from "../../components/roller-text";
 import { useDispatch, useSelector } from "react-redux";
@@ -104,7 +104,8 @@ const Albums: NextPage = () => {
                             <Button
                                 className={styles["main-button"]}
                                 onClick={getAlbums}
-                                disabled={loading || !moreAlbums}>
+                                disabled={loading || !moreAlbums}
+                            >
                                 Load More
                             </Button>
                         )}

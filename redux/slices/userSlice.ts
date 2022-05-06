@@ -21,7 +21,7 @@ export const userSlice = createSlice({
             state.email = action.payload;
             state.admin = action.payload === "teunstout@hotmail.com";
         },
-        removeUser: (state, action: Action) => {
+        removeUser: (state, _action: Action) => {
             state.loggedIn = false;
             state.admin = false;
             state.email = "";

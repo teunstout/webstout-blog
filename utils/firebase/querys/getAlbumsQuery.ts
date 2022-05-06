@@ -1,12 +1,4 @@
-import {
-    collection,
-    DocumentData,
-    Firestore,
-    limit,
-    orderBy,
-    query,
-    startAfter,
-} from "firebase/firestore";
+import { collection, Firestore, limit, orderBy, query, startAfter } from "firebase/firestore";
 import { FirebaseEnum } from "../../enums/firebase";
 
 export const getAlbumsQuery = (firestore: Firestore, lim: number, start?: string) =>

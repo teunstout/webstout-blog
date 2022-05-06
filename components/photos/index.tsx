@@ -25,7 +25,8 @@ const Photos = ({ images, albumName, onSelect }: PhotosInterface) => {
                     onClick={onSelect ? () => setSelectedImage(image, index) : undefined}
                     className={`${styles["photo-wrapper"]} 
                     ${onSelect ? styles["photo-select"] : ""} 
-                    ${selected === image ? styles["photo-selected"] : ""}`}>
+                    ${selected === image ? styles["photo-selected"] : ""}`}
+                >
                     <Image
                         alt={`Image album - ${albumName}`}
                         src={image}

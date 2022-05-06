@@ -7,7 +7,7 @@ import { initializeApp } from "firebase/app";
 import clientCredentials from "../utils/firebase/clientCredentials";
 import Authentication from "../components/elements/auth";
 
-function MyApp({ Component, pageProps }: AppProps) {
+function App({ Component, pageProps }: AppProps) {
     initializeApp(clientCredentials);
 
     return (
@@ -21,4 +21,4 @@ function MyApp({ Component, pageProps }: AppProps) {
     );
 }
 
-export default MyApp;
+export default App;

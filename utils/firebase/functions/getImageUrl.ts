@@ -9,5 +9,5 @@ import { getDownloadURL, getStorage, ref } from "firebase/storage";
 export default async function getImageUrl(image: string): Promise<string> {
     const storage = getStorage();
 
-    return await getDownloadURL(ref(storage, image));
+    return getDownloadURL(ref(storage, image));
 }

@@ -63,7 +63,7 @@ export const uploadFormSlice = createSlice({
         setCreatedAt: (state, action: PayloadAction<string>) => {
             state.createdAt = action.payload;
         },
-        resetUploadFormState: (state, action: Action) => {
+        resetUploadFormState: (state, _action: Action) => {
             state.title = initialState.title;
             state.subtitle = initialState.subtitle;
             state.startDate = initialState.startDate;

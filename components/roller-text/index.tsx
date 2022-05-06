@@ -1,5 +1,3 @@
-import Image from "next/image";
-import { useState } from "react";
 import Roller from "../elements/roller";
 import styles from "./Index.module.scss";
 

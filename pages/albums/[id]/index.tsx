@@ -2,7 +2,6 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import PageLayout from "../../../components/page-layout";
 import styles from "./Index.module.scss";
-import Photos from "../../../components/photos";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { StoreState } from "../../../redux/store";

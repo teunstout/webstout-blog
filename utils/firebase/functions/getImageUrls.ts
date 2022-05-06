@@ -3,7 +3,7 @@ import { getDownloadURL, getStorage, ref } from "firebase/storage";
 /**
  * Function that gets the firebase urls for images and returns them in order.
  * We make use of concurrently retrieving images.
- * 
+ *
  * @param images Array of relative images ex(/image/image.jpg)
  * @returns array of strings in order
  */

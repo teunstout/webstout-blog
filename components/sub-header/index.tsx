@@ -1,5 +1,4 @@
 import React from "react";
-import Navigation from "../navigation";
 import styles from "./Index.module.scss";
 
 interface SubHeaderInterface {
