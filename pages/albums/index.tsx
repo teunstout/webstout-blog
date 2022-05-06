@@ -13,6 +13,7 @@ import { StoreState } from "../../redux/store";
 import Link from "next/link";
 import { getAlbumsQuery } from "../../utils/firebase/querys/getAlbumsQuery";
 import { AlbumInterface } from "../../redux/slices/albumSlice";
+import SubHeader from "../../components/sub-header";
 
 const Albums: NextPage = () => {
     const dispatch = useDispatch();
@@ -66,8 +67,6 @@ const Albums: NextPage = () => {
             });
         }
 
-        console.log(ab);
-
         return ab;
     };
 
@@ -80,10 +79,7 @@ const Albums: NextPage = () => {
             </Head>
 
             <main className={styles["main"]}>
-                <header className={styles["main-header"]}>
-                    <h1>Albums</h1>
-                    <p>Photos & videos created and shot by me</p>
-                </header>
+                <SubHeader title="Albums" subTitle="Photos & videos created and shot by me" />
 
                 <section className={styles["main-photo-cards"]}>
                     {data &&

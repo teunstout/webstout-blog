@@ -22,11 +22,9 @@ export const userSlice = createSlice({
             state.admin = action.payload === "teunstout@hotmail.com";
         },
         removeUser: (state, action: Action) => {
-            state = {
-                loggedIn: false,
-                admin: false,
-                email: "",
-            };
+            state.loggedIn = false;
+            state.admin = false;
+            state.email = "";
         },
     },
 });

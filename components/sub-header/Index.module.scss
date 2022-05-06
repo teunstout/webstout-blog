@@ -1,0 +1,8 @@
+@use "styles/variables" as var;
+
+.sub-header > p {
+    font-size: 1rem;
+    font-weight: 600;
+    font-style: italic;
+    color: var.$on-secondary;
+}

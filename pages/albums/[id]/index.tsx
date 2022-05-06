@@ -11,6 +11,8 @@ import RollerText from "../../../components/roller-text";
 import { AlbumInterface, setAlbum } from "../../../redux/slices/albumSlice";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
 import { FirebaseEnum } from "../../../utils/enums/firebase";
+import SubHeader from "../../../components/sub-header";
+import PhotoSlider from "../../../components/photo-slider";
 
 const Album: NextPage = () => {
     const router = useRouter();
@@ -69,8 +71,14 @@ const Album: NextPage = () => {
             </Head>
 
             <main className={styles["main"]}>
+                {!loading && <SubHeader title={album.title} subTitle={album.subtitle} />}
+
                 {loading && <RollerText text="Retrieving images from album" />}
-                {!loading && album && <Photos albumName={album.title} images={album.images} />}
+
+                {/* {!loading && album && <Photos albumName={album.title} images={album.images} />} */}
+                {!loading && album && album.images.length > 5 && (
+                    <PhotoSlider images={album.images} />
+                )}
             </main>
         </PageLayout>
     );
