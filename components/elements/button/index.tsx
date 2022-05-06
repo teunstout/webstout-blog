@@ -1,3 +1,4 @@
+import React from "react";
 import styles from "./Index.module.scss";
 
 interface ButtonInterface extends React.HTMLProps<HTMLAnchorElement> {
