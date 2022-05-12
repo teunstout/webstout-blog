@@ -2,6 +2,7 @@ import { ImageInterface } from "../../redux/slices/formSlice";
 
 export const inputImgsToBlob = (event: React.ChangeEvent<HTMLInputElement>): ImageInterface[] => {
     const imgs: ImageInterface[] = [];
+    const reader = new FileReader();
 
     if (event.target.files) {
         for (let i: number = 0; i < event.target.files.length; i++) {

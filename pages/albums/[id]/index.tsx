@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import PageLayout from "../../../components/page-layout";
 import styles from "./Index.module.scss";
-import Photos from "../../../components/photos";
+import Photos from "../../../components/perfectGrid";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { StoreState } from "../../../redux/store";
@@ -13,6 +13,8 @@ import getImageUrls from "../../../utils/firebase/functions/getImageUrls";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
 import { FirebaseEnum } from "../../../utils/enums/firebase";
 import getImageUrl from "../../../utils/firebase/functions/getImageUrl";
+import PerfectGrid from "../../../components/perfectGrid";
+import Navigation from "../../../components/navigation";
 
 const Album: NextPage = () => {
     const router = useRouter();
@@ -45,8 +47,6 @@ const Album: NextPage = () => {
         } else {
             a = await setAlbumImgUrls(albumIndex);
         }
-
-        console.log(a);
 
         if (a !== undefined) dispatch(setAlbum(a));
 
@@ -92,7 +92,7 @@ const Album: NextPage = () => {
     };
 
     return (
-        <PageLayout img={album && album.banner ? album.banner : undefined}>
+        <div>
             <Head>
                 <title>
                     Webstout Blog - {album && album.title ? album.title : "Album not found"}
@@ -104,11 +104,10 @@ const Album: NextPage = () => {
                 <link rel="icon" href="/logo.svg" />
             </Head>
 
-            <main className={styles["main"]}>
-                {loading && <RollerText text="Retrieving images from album" />}
-                {!loading && album && <Photos albumName={album.title} images={album.images} />}
-            </main>
-        </PageLayout>
+            <Navigation />
+            {loading && <RollerText text="Retrieving images from album" />}
+            {!loading && album && <PerfectGrid albumName={album.title} images={album.images} />}
+        </div>
     );
 };
 

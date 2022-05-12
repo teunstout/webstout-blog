@@ -4,7 +4,7 @@ import Icon, { IconEnum } from "../elements/icon";
 import Button from "../elements/button";
 import uploadAlbum from "../../utils/functions/uploadAlbum";
 import { useDispatch } from "react-redux";
-import Photos from "../photos";
+import Photos from "../perfectGrid";
 import { Dispatch, SetStateAction, useState } from "react";
 import { PathsEnum } from "../../utils/enums/paths";
 import RollerText from "../roller-text";
